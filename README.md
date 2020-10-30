@@ -18,7 +18,6 @@ _**1) Login & Logout Page**_
 
 
 _**2) Main page & Drawer Widget**_
-
 ![1](https://user-images.githubusercontent.com/45419456/97695951-2fb41d00-1ae8-11eb-86a1-950af9c4f679.PNG)
 ![1](https://user-images.githubusercontent.com/45419456/97695993-40649300-1ae8-11eb-80d9-4275b76dfe22.PNG)
 
