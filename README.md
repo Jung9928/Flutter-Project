@@ -3,7 +3,7 @@
 1) 로그인 & 로그아웃 구현
 2) 메모 생성/삭제/수정/저장 구현
 3) Youtube API를 사용한 Youtube 영상 ListView
-4) 영어 문장 데이터 가져와 UI 렌더링
+4) Firestore에서 영어 문장 데이터 가져와 UI 렌더링
 
 A new Flutter application.
 
