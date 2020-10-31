@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class Household_Novice extends StatefulWidget {
-  Household_Novice({Key key, this.saveIndex, this.NovicefullCount})
+  Household_Novice({Key key, this.saveIndex, this.sentencefullcount})
       : super(key: key);
 
   int saveIndex; // firestore에 저장된 가장 최근에 본 영어 문장 인덱스를 저장할 변수.
-  int NovicefullCount; // novice 레벨의 영어문장 총 갯수
+  int sentencefullcount; // novice 레벨의 영어문장 총 갯수
 
   @override
   _Household_NoviceState createState() => _Household_NoviceState();
@@ -15,15 +15,9 @@ class Household_Novice extends StatefulWidget {
 
 class _Household_NoviceState extends State<Household_Novice> {
   BuildContext _context;
+
   //int _QuestionCount = ; // 영어 문장 인덱스&firestore에서 저장된 영어문장을 읽어올 때 사용되는 인덱스.
   int _selectedIndex = 1; // bottom navigation bar에서 사용할 변수
-
-  // bottom navigation Bar을 클릭 시, 호출되는 함수.
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +33,7 @@ class _Household_NoviceState extends State<Household_Novice> {
         appBar: AppBar(
           backgroundColor: Colors.red[200],
           title: Text(
-            '집안일 거들기',
+            '집',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -84,7 +78,7 @@ class _Household_NoviceState extends State<Household_Novice> {
                                 child: Text(
                                   (widget.saveIndex + 1).toString() +
                                       ' / ' +
-                                      widget.NovicefullCount.toString(),
+                                      widget.sentencefullcount.toString(),
                                   style: TextStyle(
                                       fontSize: width * 0.055,
                                       fontWeight: FontWeight.bold),
@@ -165,7 +159,7 @@ class _Household_NoviceState extends State<Household_Novice> {
                                     child: RaisedButton(
                                       onPressed: () {
                                         if (widget.saveIndex <
-                                                widget.NovicefullCount &&
+                                                widget.sentencefullcount &&
                                             widget.saveIndex > 0) {
                                           setState(() {
                                             widget.saveIndex--;
@@ -225,7 +219,7 @@ class _Household_NoviceState extends State<Household_Novice> {
                                     child: RaisedButton(
                                       onPressed: () {
                                         if (widget.saveIndex <
-                                            widget.NovicefullCount - 1) {
+                                            widget.sentencefullcount - 1) {
                                           setState(() {
                                             widget.saveIndex++;
                                             updateIndex(widget.saveIndex);
@@ -255,25 +249,6 @@ class _Household_NoviceState extends State<Household_Novice> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('홈'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              title: Text('즐겨찾기'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.web),
-              title: Text('불러오기'),
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blueAccent,
-          onTap: _onItemTapped,
-        ),
       ),
     );
   }
@@ -284,7 +259,7 @@ class _Household_NoviceState extends State<Household_Novice> {
       context: _context,
       barrierDismissible: false, // 반드시 탭 버튼을 누를건가
       builder: (BuildContext context) {
-        if (count == widget.NovicefullCount - 1) {
+        if (count == widget.sentencefullcount - 1) {
           return AlertDialog(
             title: Text('마지막 문장입니다.'),
             //content: Text("하나의 문항만을 체크해 주셔야 \n다음화면으로 이동됩니다."),
@@ -329,7 +304,10 @@ class _Household_NoviceState extends State<Household_Novice> {
 
   // 가장 최근에 본 문장의 index를 firestore에 저장.
   void updateIndex(int index) {
-    Firestore.instance.collection("save").document("index").updateData({
+    Firestore.instance
+        .collection("save_house_novice_index")
+        .document("index")
+        .updateData({
       'textIndex': index,
     });
   }

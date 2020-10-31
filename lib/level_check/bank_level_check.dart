@@ -1,22 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/study/house/household_advanced.dart';
-import 'package:flutter_firebase_login/study/house/household_intermediate.dart';
-import 'package:flutter_firebase_login/study/house/household_novice.dart';
+import 'package:flutter_firebase_login/study/bank/bank_intermediate.dart';
+import 'package:flutter_firebase_login/study/bank/bank_novice.dart';
 
-class LevelCheck extends StatefulWidget {
+class BankLevelCheck extends StatefulWidget {
   @override
-  _LevelCheckState createState() => _LevelCheckState();
+  BankLevelCheckState createState() => BankLevelCheckState();
 }
 
-class _LevelCheckState extends State<LevelCheck> {
+class BankLevelCheckState extends State<BankLevelCheck> {
   BuildContext _context;
   bool _novice = false;
   bool _intermediate = false;
   bool _advanced = false;
   int _count = 0; // 레벨 체크에서 체크가 된 횟수 저장
   int _index = 0; // 최근에 봤던 영어문장의 index를 저장할 변수
-  int _noviceFullCount = 0;
+  int _sentencefullcount = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +29,7 @@ class _LevelCheckState extends State<LevelCheck> {
         appBar: AppBar(
           backgroundColor: Colors.red[200],
           title: Text(
-            '레벨 테스트',
+            '은행 난이도 선택',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -38,8 +37,8 @@ class _LevelCheckState extends State<LevelCheck> {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.red[200]),
-              color: Colors.red[200],
+              border: Border.all(color: Colors.deepPurple),
+              color: Colors.deepPurple,
             ),
             width: (screenSize.width) * 0.85,
             height: height * 0.63,
@@ -51,7 +50,7 @@ class _LevelCheckState extends State<LevelCheck> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.red[200]),
+                    border: Border.all(color: Colors.deepPurple),
                     color: Colors.white,
                   ),
                   width: width * 0.73,
@@ -62,7 +61,7 @@ class _LevelCheckState extends State<LevelCheck> {
                         padding: EdgeInsets.fromLTRB(
                             0, width * 0.048, 0, width * 0.12),
                         child: Text(
-                          'OPIc 주제 별 문장 학습을 \n진행하기 전에 원하는 \nLevel을 체크해 주세요. \n\n 선택하신 Level에 맞는 문장을 \n학습하실 수 있답니다^^',
+                          'OPIc 주제 별 문장 학습을 \n진행하기 전에 원하는 \nLevel을 체크해 주세요. \n\n선택하신 Level에 맞는 문장을 \n학습하실 수 있답니다^^',
                           style: TextStyle(
                             fontSize: width * 0.050,
                             fontWeight: FontWeight.bold,
@@ -151,28 +150,32 @@ class _LevelCheckState extends State<LevelCheck> {
                     child: RaisedButton(
                       onPressed: () async {
                         if (_count == 1 && _novice == true) {
-                          await showAlertDataLoadDialog();
+                          await showAlertNoviceDataLoadDialog();
                           Navigator.push(context, MaterialPageRoute<void>(
                               builder: (BuildContext context) {
-                            return Household_Novice(
+                            return BankNovice(
                               saveIndex: _index,
-                              NovicefullCount: _noviceFullCount,
+                              NovicefullCount: _sentencefullcount,
                             );
                           }));
                         } else if (_count == 1 && _intermediate == true) {
-                          setState(() {
-                            Navigator.push(context, MaterialPageRoute<void>(
-                                builder: (BuildContext context) {
-                              return Household_Intermediate();
-                            }));
-                          });
+                          await showAlertImDataLoadDialog();
+                          Navigator.push(context, MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                            return BankIntermediate(
+                              saveIndex: _index,
+                              NovicefullCount: _sentencefullcount,
+                            );
+                          }));
                         } else if (_count == 1 && _advanced == true) {
-                          setState(() {
-                            Navigator.push(context, MaterialPageRoute<void>(
-                                builder: (BuildContext context) {
-                              return Household_Advanced();
-                            }));
-                          });
+                          await showAlertAlDataLoadDialog();
+                          Navigator.push(context, MaterialPageRoute<void>(
+                              builder: (BuildContext context) {
+                            return BankIntermediate(
+                              saveIndex: _index,
+                              NovicefullCount: _sentencefullcount,
+                            );
+                          }));
                         } else {
                           showAlertDialog();
                         }
@@ -195,22 +198,62 @@ class _LevelCheckState extends State<LevelCheck> {
   }
 
   // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
-  void countNovice() async {
+  void countBankNovice() async {
     QuerySnapshot _myDoc =
-        await Firestore.instance.collection('house_novice').getDocuments();
+        await Firestore.instance.collection('bank_novice').getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    _noviceFullCount = _myDocCount.length;
+    _sentencefullcount = _myDocCount.length;
+  }
+
+  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
+  void countBankIM() async {
+    QuerySnapshot _myDoc =
+        await Firestore.instance.collection('bank_intermediate').getDocuments();
+    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+    _sentencefullcount = _myDocCount.length;
+  }
+
+  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
+  void countBankAL() async {
+    QuerySnapshot _myDoc =
+        await Firestore.instance.collection('bank_advanced').getDocuments();
+    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+    _sentencefullcount = _myDocCount.length;
   }
 
   // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
-  void getData() async {
+  void getBankNoviceIndexData() async {
     await Firestore.instance
-        .collection('save')
+        .collection('save_bank_novice_index')
         .document('index')
         .get()
         .then((idx) {
       _index = idx.data['textIndex'];
-      print(_noviceFullCount);
+      print(_sentencefullcount);
+    });
+  }
+
+  // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
+  void getBankIMIndexData() async {
+    await Firestore.instance
+        .collection('save_bank_intermediate_index')
+        .document('index')
+        .get()
+        .then((idx) {
+      _index = idx.data['textIndex'];
+      print(_sentencefullcount);
+    });
+  }
+
+  // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
+  void getBankALIndexData() async {
+    await Firestore.instance
+        .collection('save_bank_al_index')
+        .document('index')
+        .get()
+        .then((idx) {
+      _index = idx.data['textIndex'];
+      print(_sentencefullcount);
     });
   }
 
@@ -235,27 +278,91 @@ class _LevelCheckState extends State<LevelCheck> {
     );
   }
 
-  Future<void> showAlertDataLoadDialog() async {
-    countNovice(); // Navigator.pop에 2개의 메소드 호출은 불가하니 여기서 호출하여 dialog 팝업 시, firestore에 데이터 요청.
+  // Novice level 데이터 얻기 확인/취소 dialog
+  Future<void> showAlertNoviceDataLoadDialog() async {
+    // Navigator.pop에 2개의 메소드 호출은 불가하니 여기서 호출하여 dialog 팝업 시, firestore에 데이터 요청.
+    countBankNovice();
     await showDialog(
       context: _context,
       barrierDismissible: false, // 반드시 탭 버튼을 눌러야 함
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('데이터 불러오기 알림'),
-          content: Text("가장 최근에 봤던 영어문장을 저장소로부터\n 가져오시겠습니까?"),
+          content: Text("가장 최근에 봤던 영어문장을 저장소로부터\n가져오시겠습니까?"),
           actions: <Widget>[
             FlatButton(
               child: Text('데이터 가져오기'),
               onPressed: () {
-                Navigator.pop(context, getData());
+                Navigator.pop(context, getBankNoviceIndexData());
               },
             ),
             FlatButton(
               child: Text('취소'),
               onPressed: () {
                 _index = 0;
-                Navigator.pop(context, countNovice());
+                Navigator.pop(context, countBankNovice());
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // IM level 데이터 얻기 확인/취소 dialog
+  Future<void> showAlertImDataLoadDialog() async {
+    // Navigator.pop에 2개의 메소드 호출은 불가하니 여기서 호출하여 dialog 팝업 시, firestore에 데이터 요청.
+    countBankIM();
+    await showDialog(
+      context: _context,
+      barrierDismissible: false, // 반드시 탭 버튼을 눌러야 함
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('데이터 불러오기 알림'),
+          content: Text("가장 최근에 봤던 영어문장을 저장소로부터\n가져오시겠습니까?"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('데이터 가져오기'),
+              onPressed: () {
+                Navigator.pop(context, getBankIMIndexData());
+              },
+            ),
+            FlatButton(
+              child: Text('취소'),
+              onPressed: () {
+                _index = 0;
+                Navigator.pop(context, countBankIM());
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // AL level 데이터 얻기 확인/취소 dialog
+  Future<void> showAlertAlDataLoadDialog() async {
+    // Navigator.pop에 2개의 메소드 호출은 불가하니 여기서 호출하여 dialog 팝업 시, firestore에 데이터 요청.
+    countBankAL();
+    await showDialog(
+      context: _context,
+      barrierDismissible: false, // 반드시 탭 버튼을 눌러야 함
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('데이터 불러오기 알림'),
+          content: Text("가장 최근에 봤던 영어문장을 저장소로부터\n가져오시겠습니까?"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('데이터 가져오기'),
+              onPressed: () {
+                Navigator.pop(context, getBankALIndexData());
+              },
+            ),
+            FlatButton(
+              child: Text('취소'),
+              onPressed: () {
+                _index = 0;
+                Navigator.pop(context, countBankAL());
               },
             ),
           ],

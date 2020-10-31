@@ -6,10 +6,15 @@ import 'package:flutter_firebase_login/favorite/favorite_im/level_im.dart';
 import 'package:flutter_firebase_login/favorite/favorite_novice/level_novice.dart';
 
 class favoriteNovice extends StatefulWidget {
-  favoriteNovice({Key key, this.favoriteNoviceCount}) : super(key: key);
-  int favoriteNoviceCount;
-  int favoriteIMCount;
-  int favoriteALCount;
+  favoriteNovice(
+      {Key key,
+      this.favoriteHouseNoviceCount,
+      this.favoriteHouseIMCount,
+      this.favoriteHouseALCount})
+      : super(key: key);
+  int favoriteHouseNoviceCount;
+  int favoriteHouseIMCount;
+  int favoriteHouseALCount;
 
   @override
   _favoriteNoviceState createState() => _favoriteNoviceState();
@@ -96,7 +101,8 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                                       padding:
                                           EdgeInsets.only(top: width * 0.012),
                                       child: Text(
-                                        widget.favoriteNoviceCount.toString() +
+                                        widget.favoriteHouseNoviceCount
+                                                .toString() +
                                             ' 문장',
                                         style: TextStyle(
                                           fontSize: 15,
@@ -114,7 +120,8 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                               Navigator.push(context, MaterialPageRoute<void>(
                                   builder: (BuildContext context) {
                                 return LevelNovice(
-                                  favoriteFullCount: widget.favoriteNoviceCount,
+                                  favoriteFullCount:
+                                      widget.favoriteHouseNoviceCount,
                                 );
                               }));
                             },
@@ -166,7 +173,7 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                                       padding:
                                           EdgeInsets.only(top: width * 0.012),
                                       child: Text(
-                                        widget.favoriteIMCount.toString() +
+                                        widget.favoriteHouseIMCount.toString() +
                                             ' 문장',
                                         style: TextStyle(
                                           fontSize: 15,
@@ -183,7 +190,9 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute<void>(
                                   builder: (BuildContext context) {
-                                return LevelIm();
+                                return LevelIm(
+                                    favoriteFullCount:
+                                        widget.favoriteHouseIMCount);
                               }));
                             },
                           ),
@@ -234,7 +243,7 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                                       padding:
                                           EdgeInsets.only(top: width * 0.012),
                                       child: Text(
-                                        widget.favoriteALCount.toString() +
+                                        widget.favoriteHouseALCount.toString() +
                                             ' 문장',
                                         style: TextStyle(
                                           fontSize: 15,
@@ -251,7 +260,9 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute<void>(
                                   builder: (BuildContext context) {
-                                return LevelAl();
+                                return LevelAl(
+                                    favoriteFullCount:
+                                        widget.favoriteHouseALCount);
                               }));
                             },
                           ),
@@ -267,19 +278,12 @@ class _favoriteNoviceState extends State<favoriteNovice> {
     );
   }
 
-//  // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
-//  void getNumber() {
-//    Firestore.instance.collection('save').document('index').get().then((idx) {
-//      _indexOfFavorite = idx.data['textIndex'];
-//    });
-//  }
-
   // firestore에서 즐겨찾기에 저장된 novice 레벨의 document들 갯수를 count하는 함수.
   void countFavoriteNovice(docID) async {
     QuerySnapshot _myDoc =
         await Firestore.instance.collection(docID).getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    widget.favoriteNoviceCount = _myDocCount.length;
+    widget.favoriteHouseNoviceCount = _myDocCount.length;
   }
 
   // firestore에서 즐겨찾기에 저장된 Intermediate 레벨의 document들 갯수를 count하는 함수.
@@ -287,7 +291,7 @@ class _favoriteNoviceState extends State<favoriteNovice> {
     QuerySnapshot _myDoc =
         await Firestore.instance.collection(docID).getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    widget.favoriteIMCount = _myDocCount.length;
+    widget.favoriteHouseIMCount = _myDocCount.length;
   }
 
   // firestore에서 즐겨찾기에 저장된 AL 레벨의 document들 갯수를 count하는 함수.
@@ -295,7 +299,7 @@ class _favoriteNoviceState extends State<favoriteNovice> {
     QuerySnapshot _myDoc =
         await Firestore.instance.collection(docID).getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    widget.favoriteALCount = _myDocCount.length;
+    widget.favoriteHouseALCount = _myDocCount.length;
   }
 }
 

@@ -3,33 +3,58 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class Management extends StatefulWidget {
+  Management({
+    Key key,
+    this.saveHouseNoviceCount,
+    this.saveHouseImCount,
+    this.saveHouseAlCount,
+    this.houseNoviceFullCount,
+    this.houseImFullCount,
+    this.houseAlFullCount,
+  }) : super(key: key);
+
+  int saveHouseNoviceCount;
+  int saveHouseImCount;
+  int saveHouseAlCount;
+  int houseNoviceFullCount;
+  int houseImFullCount;
+  int houseAlFullCount;
+
   @override
   _ManagementState createState() => _ManagementState();
 }
 
 class _ManagementState extends State<Management> {
-  BuildContext _context;
-  double percent = 0;
-  int saveNoviceCount = 0; // 최근에 몇번 째 novice level 영어문장을 읽었는지 저장
-  int novicefullCount = 0; // novice level의 영어문장 총 갯수
+  double percentNovice = 0;
+  double percentIm = 0;
+  double percentAl = 0;
+//  int saveNoviceCount = 0; // 최근에 몇번 째 novice level 영어문장을 읽었는지 저장
+//  int noviceFullCount = 0; // novice level의 영어문장 총 갯수
 
   @override
   Widget build(BuildContext context) {
-    _context = context;
     Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
 
-    saveNoviceCount = int.parse(saveNoviceCount.toString());
-    novicefullCount = int.parse(novicefullCount.toString());
-    percent = saveNoviceCount / novicefullCount;
+    widget.saveHouseNoviceCount =
+        int.parse(widget.saveHouseNoviceCount.toString());
+    widget.houseNoviceFullCount =
+        int.parse(widget.houseNoviceFullCount.toString());
+    percentNovice = widget.saveHouseNoviceCount / widget.houseNoviceFullCount;
+
+    widget.saveHouseImCount = int.parse(widget.saveHouseImCount.toString());
+    widget.houseImFullCount = int.parse(widget.houseImFullCount.toString());
+    percentIm = widget.saveHouseImCount / widget.houseImFullCount;
+
+    widget.saveHouseAlCount = int.parse(widget.saveHouseAlCount.toString());
+    widget.houseAlFullCount = int.parse(widget.houseAlFullCount.toString());
+    percentAl = widget.saveHouseAlCount / widget.houseAlFullCount;
 
     // 값 확인 차 넣은 print문
-    print(percent);
-    print(saveNoviceCount);
-    print(novicefullCount);
-
-    getSaveData();
+    print('percent : ' + percentNovice.toString());
+    print('saveNoviceCount : ' + widget.saveHouseNoviceCount.toString());
+    print('novicefullCount : ' + widget.houseNoviceFullCount.toString());
 
     return SafeArea(
       child: Scaffold(
@@ -42,7 +67,9 @@ class _ManagementState extends State<Management> {
         ),
         body: Center(
           child: StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection("save").snapshots(),
+              stream: Firestore.instance
+                  .collection("save_house_novice_index")
+                  .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) return Text("Error: ${snapshot.error}");
@@ -60,9 +87,9 @@ class _ManagementState extends State<Management> {
                         radius: 120.0,
                         lineWidth: 13.0,
                         animation: true,
-                        percent: percent,
+                        percent: percentNovice,
                         center: new Text(
-                          (percent * 100).toString() + '%',
+                          (percentNovice * 100).toString() + '%',
                           style: new TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20.0),
                         ),
@@ -81,7 +108,7 @@ class _ManagementState extends State<Management> {
                         animation: true,
                         percent: 0.7,
                         center: new Text(
-                          "70.0%",
+                          (percentIm * 100).toString() + '%',
                           style: new TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20.0),
                         ),
@@ -100,7 +127,7 @@ class _ManagementState extends State<Management> {
                         animation: true,
                         percent: 0.7,
                         center: new Text(
-                          "70.0%",
+                          (percentAl * 100).toString() + '%',
                           style: new TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20.0),
                         ),
@@ -120,46 +147,4 @@ class _ManagementState extends State<Management> {
       ),
     );
   }
-
-  // "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
-  Future<void> countNovice() async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection('house_novice').getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    novicefullCount = _myDocCount.length;
-  }
-
-  // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
-  Future<void> getSaveData() async {
-    countNovice();
-    await Firestore.instance
-        .collection('save')
-        .document('index')
-        .get()
-        .then((idx) {
-      saveNoviceCount = idx.data['textIndex'];
-    });
-  }
-
-//  Future<void> showAlertRetrievedDataDialog() async {
-//    countNovice();
-//    await showDialog(
-//      context: _context,
-//      barrierDismissible: false, // 선택지 외의 공간을 눌렀을 때, 반응 안하도록 설정
-//      builder: (BuildContext context) {
-//        return AlertDialog(
-//          title: Text('학습 진행률 데이터 갱신 알림'),
-//          content: Text("확인을 누르시면 최근 데이터를 반영하여 \n학습 진행률이 갱신됩니다."),
-//          actions: <Widget>[
-//            FlatButton(
-//              child: Text('확인'),
-//              onPressed: () {
-//                Navigator.pop(context, getSaveData());
-//              },
-//            ),
-//          ],
-//        );
-//      },
-//    );
-//  }
 }

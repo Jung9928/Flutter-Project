@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/script/edit_script.dart';
 import 'package:flutter_firebase_login/script/write_script.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ViewPage extends StatefulWidget {
   ViewPage({Key key, this.title, this.text, this.date, this.docID})
@@ -116,6 +117,7 @@ class _ViewPageState extends State<ViewPage> {
               child: Text('삭제'),
               onPressed: () {
                 deleteScript(widget.docID);
+                flutterToast();
                 Navigator.pop(context, "삭제");
                 Navigator.pop(_context);
               },
@@ -129,6 +131,18 @@ class _ViewPageState extends State<ViewPage> {
           ],
         );
       },
+    );
+  }
+
+  // 스크립트 삭제 완료 여부를 알려주는 토스트 메시지
+  void flutterToast() {
+    Fluttertoast.showToast(
+      msg: '스크립트 삭제 완료',
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red[200],
+      fontSize: 20.0,
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT,
     );
   }
 

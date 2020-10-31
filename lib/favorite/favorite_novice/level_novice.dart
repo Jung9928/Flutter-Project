@@ -64,8 +64,8 @@ class _LevelNoviceState extends State<LevelNovice> {
                         return Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Colors.cyan),
-                            color: Colors.cyan,
+                            border: Border.all(color: Colors.red[200]),
+                            color: Colors.red[200],
                           ),
                           width: (screenSize.width) * 0.85,
                           height: height * 0.6,
@@ -102,7 +102,7 @@ class _LevelNoviceState extends State<LevelNovice> {
                               Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: Colors.deepPurple),
+                                  border: Border.all(color: Colors.red[200]),
                                   color: Colors.white,
                                 ),
                                 width: width * 0.73,
@@ -187,31 +187,31 @@ class _LevelNoviceState extends State<LevelNovice> {
                                         textColor: Colors.black,
                                       ),
                                     ),
-                                    ButtonTheme(
-                                      minWidth: width * 0.2,
-                                      height: height * 0.05,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: RaisedButton(
-                                        onPressed: () {
-//                                          showAlertDeleteFavoriteDialog(
-//                                              Firestore.instance
-//                                                  .collection(
-//                                                  'favorite_novice')
-//                                                  .document()
-//                                                  .get()
-//                                                  .toString());
-                                        },
-                                        child: Text(
-                                          '즐겨찾기 삭제',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        color: Colors.white,
-                                        textColor: Colors.black,
-                                      ),
-                                    ),
+//                                    ButtonTheme(
+//                                      minWidth: width * 0.2,
+//                                      height: height * 0.05,
+//                                      shape: RoundedRectangleBorder(
+//                                        borderRadius: BorderRadius.circular(10),
+//                                      ),
+//                                      child: RaisedButton(
+//                                        onPressed: () {
+////                                          showAlertDeleteFavoriteDialog(
+////                                              Firestore.instance
+////                                                  .collection(
+////                                                  'favorite_novice')
+////                                                  .document()
+////                                                  .get()
+////                                                  .toString());
+//                                        },
+//                                        child: Text(
+//                                          '즐겨찾기 삭제',
+//                                          style: TextStyle(
+//                                              fontWeight: FontWeight.bold),
+//                                        ),
+//                                        color: Colors.white,
+//                                        textColor: Colors.black,
+//                                      ),
+//                                    ),
                                     ButtonTheme(
                                       minWidth: width * 0.2,
                                       height: height * 0.05,
@@ -252,36 +252,17 @@ class _LevelNoviceState extends State<LevelNovice> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('홈'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              title: Text('즐겨찾기'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.web),
-              title: Text('불러오기'),
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blueAccent,
-          onTap: _onItemTapped,
-        ),
       ),
     );
   }
 
-  // 즐겨찾기 삭제.
-  void deleteFavorite(text, translation) {
-    Firestore.instance
-        .collection('favorite_novice')
-        .document(getDocumentID(text, translation))
-        .delete();
-  }
+//  // 즐겨찾기 삭제.
+//  void deleteFavorite(text, translation) {
+//    Firestore.instance
+//        .collection('favorite_novice')
+//        .document(getDocumentID(text, translation))
+//        .delete();
+//  }
 
   getDocumentID(String text, String translation) {
     return Firestore.instance
@@ -290,6 +271,10 @@ class _LevelNoviceState extends State<LevelNovice> {
         .where('translation', isEqualTo: translation)
         .getDocuments();
   }
+
+//  void deleteFavorite(DocumentSnapshot doc) {
+//    Firestore.instance.collection('novice_favorite').document(doc.documentID).delete();
+//  }
 
   // 첫 문장 또는 마지막 문장에서 이전 or 다음 버튼을 눌렀을 시, 호출되는 함수.
   void showAlertDialog(int count) async {
@@ -330,33 +315,33 @@ class _LevelNoviceState extends State<LevelNovice> {
     );
   }
 
-  Future<void> showAlertDeleteFavoriteDialog(text, translation) async {
-    await showDialog(
-      context: _context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('즐겨찾기 삭제 경고'),
-          content: Text("정말 삭제하시겠습니까?\n삭제된 즐겨찾기는 복구되지 않습니다."),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('삭제'),
-              onPressed: () {
-                deleteFavorite(text, translation);
-                Navigator.pop(context, "삭제");
-              },
-            ),
-            FlatButton(
-              child: Text('취소'),
-              onPressed: () {
-                Navigator.pop(context, "취소");
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+//  Future<void> showAlertDeleteFavoriteDialog(text, translation) async {
+//    await showDialog(
+//      context: _context,
+//      barrierDismissible: false, // user must tap button!
+//      builder: (BuildContext context) {
+//        return AlertDialog(
+//          title: Text('즐겨찾기 삭제 경고'),
+//          content: Text("정말 삭제하시겠습니까?\n삭제된 즐겨찾기는 복구되지 않습니다."),
+//          actions: <Widget>[
+//            FlatButton(
+//              child: Text('삭제'),
+//              onPressed: () {
+//                deleteFavorite(text, translation);
+//                Navigator.pop(context, "삭제");
+//              },
+//            ),
+//            FlatButton(
+//              child: Text('취소'),
+//              onPressed: () {
+//                Navigator.pop(context, "취소");
+//              },
+//            ),
+//          ],
+//        );
+//      },
+//    );
+//  }
 }
 
 // 배경 이미지를 희미하게 삽입.

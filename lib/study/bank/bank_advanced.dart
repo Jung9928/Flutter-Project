@@ -2,29 +2,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Household_Intermediate extends StatefulWidget {
-  Household_Intermediate({Key key, this.saveIndex, this.sentencefullcount})
+class BankIntermediate extends StatefulWidget {
+  BankIntermediate({Key key, this.saveIndex, this.sentencefullcount})
       : super(key: key);
 
   int saveIndex; // firestore에 저장된 가장 최근에 본 영어 문장 인덱스를 저장할 변수.
   int sentencefullcount; // novice 레벨의 영어문장 총 갯수
 
   @override
-  _Household_IntermediateState createState() => _Household_IntermediateState();
+  _BankIntermediateState createState() => _BankIntermediateState();
 }
 
-class _Household_IntermediateState extends State<Household_Intermediate> {
+class _BankIntermediateState extends State<BankIntermediate> {
   BuildContext _context;
-
-  //int _QuestionCount = ; // 영어 문장 인덱스&firestore에서 저장된 영어문장을 읽어올 때 사용되는 인덱스.
-  int _selectedIndex = 1; // bottom navigation bar에서 사용할 변수
-
-  // bottom navigation Bar을 클릭 시, 호출되는 함수.
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +30,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
         appBar: AppBar(
           backgroundColor: Colors.red[200],
           title: Text(
-            '집',
+            '은행',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -49,9 +39,8 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
             BackgroundImage(context),
             Center(
               child: StreamBuilder<QuerySnapshot>(
-                stream: Firestore.instance
-                    .collection("house_intermediate")
-                    .snapshots(),
+                stream:
+                    Firestore.instance.collection("bank_advanced").snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasError)
@@ -63,8 +52,8 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                       return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.cyan),
-                          color: Colors.cyan,
+                          border: Border.all(color: Colors.deepPurple),
+                          color: Colors.deepPurple,
                         ),
                         width: (screenSize.width) * 0.85,
                         height: height * 0.6,
@@ -101,7 +90,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Colors.cyan),
+                                border: Border.all(color: Colors.deepPurple),
                                 color: Colors.white,
                               ),
                               width: width * 0.73,
@@ -257,25 +246,6 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
             ),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('홈'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              title: Text('즐겨찾기'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.web),
-              title: Text('불러오기'),
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blueAccent,
-          onTap: _onItemTapped,
-        ),
       ),
     );
   }
@@ -332,7 +302,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
   // 가장 최근에 본 문장의 index를 firestore에 저장.
   void updateIndex(int index) {
     Firestore.instance
-        .collection("save_house_intermediate_index")
+        .collection("save_bank_al_index")
         .document("index")
         .updateData({
       'textIndex': index,
@@ -342,23 +312,11 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
   // firestore의 favorite_novice에 데이터 추가. (즐겨찾기 클릭 시,)
   void Add_Favorite(String name, String description) {
     flutterToast();
-    Firestore.instance.collection('favorite_novice').add({
+    Firestore.instance.collection('favorite_al').add({
       'text': name,
       'translation': description,
     });
   }
-
-//   firestore의 favorite_novice에 데이터 추가. (즐겨찾기 클릭 시,)
-//  void Add_Favorite(String name, String description) {
-//    flutterToast();
-//    Firestore.instance
-//        .collection('favorite_novice')
-//        .document(DocumentSnapshot.documentID)
-//        .updateData({
-//      'text': name,
-//      'translation': description,
-//    });
-//  }
 }
 
 // 배경 이미지를 희미하게 삽입.

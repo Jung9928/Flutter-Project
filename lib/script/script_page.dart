@@ -42,13 +42,15 @@ class _Make_ScriptState extends State<Make_Script> {
                     );
                   default:
                     // 생성한 스크립트가 없는 경우 화면에 표시할 안내글
-                    if (!snapshot.hasData) {
+                    if (snapshot.data.documents.isEmpty) {
                       return Container(
                         alignment: Alignment.center,
                         child: Text(
                           '지금 바로 "스크립트 추가" 버튼을 눌러\n 새 스크립트를 추가해보세요!\n\n\n\n\n\n\n\n',
-                          style:
-                              TextStyle(fontSize: 15, color: Colors.blueAccent),
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.blue),
                           textAlign: TextAlign.center,
                         ),
                       );
@@ -152,6 +154,7 @@ class _Make_ScriptState extends State<Make_Script> {
         tooltip: '스크립트를 추가하려면 클릭하세요',
         label: Text("스크립트 추가"),
         icon: Icon(Icons.add),
+        backgroundColor: Colors.red[200],
       ),
     );
   }
