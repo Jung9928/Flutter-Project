@@ -31,18 +31,18 @@ _**3) Script Page (CRUD)**_
 ![7](https://user-images.githubusercontent.com/45419456/97811043-46f73400-1cbb-11eb-8981-03aca4d1e6aa.PNG)
 ![image](https://user-images.githubusercontent.com/45419456/97811074-7efe7700-1cbb-11eb-8a0c-da92dec9290c.png)
 ![image](https://user-images.githubusercontent.com/45419456/97811117-c38a1280-1cbb-11eb-958d-afab5a1f4f26.png)
-![1](https://user-images.githubusercontent.com/45419456/97697496-6d19aa00-1aea-11eb-9fed-d6771f2eb069.PNG)
+![8](https://user-images.githubusercontent.com/45419456/97811373-93437380-1cbd-11eb-8eed-9da17bc53e64.PNG)
 
 
 _**4) Youtube Page**_
 
-![image](https://user-images.githubusercontent.com/45419456/97696132-76a21280-1ae8-11eb-9519-babf17ee404b.png)
-![image](https://user-images.githubusercontent.com/45419456/97696173-86b9f200-1ae8-11eb-8deb-8b6852ac3193.png)
+![11](https://user-images.githubusercontent.com/45419456/97811392-ace4bb00-1cbd-11eb-9819-f8620744ee88.PNG)
+![12](https://user-images.githubusercontent.com/45419456/97811394-af471500-1cbd-11eb-8063-7f79fc0a546a.PNG)
 
 
 _**5) Select Topic Page**_
 
-![image](https://user-images.githubusercontent.com/45419456/97696206-933e4a80-1ae8-11eb-91da-109758fa68c9.png)
+![9](https://user-images.githubusercontent.com/45419456/97811386-a1918f80-1cbd-11eb-963b-61424c27b579.PNG)
 
 
 _**6) Level check Page**_
