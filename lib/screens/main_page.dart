@@ -78,9 +78,6 @@ class _MainPageState extends State<MainPage> {
     double width = screenSize.width;
     double height = screenSize.height;
 
-//    countNovice();
-//    getSaveData();
-
     return Scaffold(
       resizeToAvoidBottomInset:
           false, // 화면에서 keyboard가 올라올 시, 화면을 밀어내어 발생하는 overflow pixel 문제를 해결.
@@ -118,7 +115,6 @@ class _MainPageState extends State<MainPage> {
               onTap: () {
                 print('hhhh');
               },
-              trailing: Icon(Icons.add),
             ),
             ListTile(
               leading: Icon(Icons.exit_to_app, color: Colors.grey[850]),
@@ -126,7 +122,6 @@ class _MainPageState extends State<MainPage> {
               onTap: () {
                 FirebaseAuth.instance.signOut();
               },
-              trailing: Icon(Icons.add),
             ),
           ],
         ),

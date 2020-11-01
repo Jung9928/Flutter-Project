@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       // JoinOrLogin형의 데이터를 AuthPage에 제공하는 Provider를 생성.
       // 이렇게 Provider를 제공하면 위젯트리 상에서 AuthPage부터 아래의 모든 자식 위젯들은
       // Provider에 접근 가능.

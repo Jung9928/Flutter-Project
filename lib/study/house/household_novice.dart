@@ -16,9 +16,6 @@ class Household_Novice extends StatefulWidget {
 class _Household_NoviceState extends State<Household_Novice> {
   BuildContext _context;
 
-  //int _QuestionCount = ; // 영어 문장 인덱스&firestore에서 저장된 영어문장을 읽어올 때 사용되는 인덱스.
-  int _selectedIndex = 1; // bottom navigation bar에서 사용할 변수
-
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -55,8 +52,8 @@ class _Household_NoviceState extends State<Household_Novice> {
                       return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.cyan),
-                          color: Colors.cyan,
+                          border: Border.all(color: Colors.red[200]),
+                          color: Colors.red[200],
                         ),
                         width: (screenSize.width) * 0.85,
                         height: height * 0.6,
@@ -93,7 +90,7 @@ class _Household_NoviceState extends State<Household_Novice> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Colors.deepPurple),
+                                border: Border.all(color: Colors.red[200]),
                                 color: Colors.white,
                               ),
                               width: width * 0.73,

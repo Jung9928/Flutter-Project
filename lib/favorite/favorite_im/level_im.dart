@@ -13,14 +13,6 @@ class _LevelImState extends State<LevelIm> {
   BuildContext _context;
   int indexOfFavoriteNovice =
       0; // 현재 firestore에 저장된 favorite_novice 컬렉션의 데이터 index
-  int _selectedIndex = 1; // bottom navigation bar에서 사용할 변수
-
-  // bottom navigation Bar을 클릭 시, 호출되는 함수.
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +21,12 @@ class _LevelImState extends State<LevelIm> {
     double height = screenSize.height;
     _context = context;
 
-    //countFavoriteNovice('favorite_novice');
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red[200],
           title: Text(
-            '집안일 거들기',
+            'IL~IM수준의 즐겨찾기 문장',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

@@ -61,7 +61,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                         padding: EdgeInsets.fromLTRB(
                             0, width * 0.048, 0, width * 0.12),
                         child: Text(
-                          'OPIc 주제 별 문장 학습을 \n진행하기 전에 원하는 \nLevel을 체크해 주세요. \n\n선택하신 Level에 맞는 문장을 \n학습하실 수 있답니다^^',
+                          'OPIc 주제 별 문장 학습을 \n진행하기 전에 원하는 \n난이도를 선택해 주세요. \n\n선택하신 난이도에 맞는 문장을 \n학습하실 수 있답니다^^',
                           style: TextStyle(
                             fontSize: width * 0.050,
                             fontWeight: FontWeight.bold,
@@ -288,7 +288,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('데이터 불러오기 알림'),
-          content: Text("가장 최근에 봤던 영어문장을 저장소로부터\n가져오시겠습니까?"),
+          content: Text("가장 최근에 학습한 영어문장을 저장소로부터\n가져오시겠습니까?"),
           actions: <Widget>[
             FlatButton(
               child: Text('데이터 가져오기'),
@@ -319,7 +319,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('데이터 불러오기 알림'),
-          content: Text("가장 최근에 봤던 영어문장을 저장소로부터\n가져오시겠습니까?"),
+          content: Text("가장 최근에 학습한 영어문장을 저장소로부터\n가져오시겠습니까?"),
           actions: <Widget>[
             FlatButton(
               child: Text('데이터 가져오기'),
@@ -350,7 +350,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('데이터 불러오기 알림'),
-          content: Text("가장 최근에 봤던 영어문장을 저장소로부터\n가져오시겠습니까?"),
+          content: Text("가장 최근에 학습한 영어문장을 저장소로부터\n가져오시겠습니까?"),
           actions: <Widget>[
             FlatButton(
               child: Text('데이터 가져오기'),
