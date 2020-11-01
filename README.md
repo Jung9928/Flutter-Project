@@ -13,8 +13,8 @@ A new Flutter application.
 
 _**1) Login & Logout Page**_
 
-![1](https://user-images.githubusercontent.com/45419456/97695632-b1f01180-1ae7-11eb-89b2-d03ac7b62bf0.PNG)
-![image](https://user-images.githubusercontent.com/45419456/97695876-1612d580-1ae8-11eb-8d46-b4eb42137ff6.png)
+![1](https://user-images.githubusercontent.com/45419456/97810960-e23bd980-1cba-11eb-8c21-b3df2bfb31ac.PNG)
+![image](https://user-images.githubusercontent.com/45419456/97810971-ecf66e80-1cba-11eb-9561-4517ab79a33c.png)
 
 
 
