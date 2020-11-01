@@ -11,7 +11,7 @@ A new Flutter application.
 
 #### Screenshot ####
 
-_**1) Login & Logout & forget Password Page **_
+_**1) Login & Logout & forget Password Page**_
 
 ![1](https://user-images.githubusercontent.com/45419456/97810960-e23bd980-1cba-11eb-8c21-b3df2bfb31ac.PNG)
 ![image](https://user-images.githubusercontent.com/45419456/97810971-ecf66e80-1cba-11eb-9561-4517ab79a33c.png)
@@ -47,14 +47,14 @@ _**5) Select Topic Page**_
 
 _**6) Level check Page**_
 
-![image](https://user-images.githubusercontent.com/45419456/97696229-9e917600-1ae8-11eb-8398-6a4bf2b39968.png)
+![image](https://user-images.githubusercontent.com/45419456/97811642-49f42380-1cbf-11eb-880e-4d636a6af802.png)
 
 
 _**7) Study Page**_
 
-![image](https://user-images.githubusercontent.com/45419456/97696257-a94c0b00-1ae8-11eb-8206-ad6a3d0e014f.png)
+![image](https://user-images.githubusercontent.com/45419456/97811625-2c26be80-1cbf-11eb-9506-a8feacc1b0ad.png)
 
 
 _**8) Study Progress Page**_
 
-![image](https://user-images.githubusercontent.com/45419456/97696309-bcf77180-1ae8-11eb-9111-e5420b1d00d4.png)
+![image](https://user-images.githubusercontent.com/45419456/97811662-5ed0b700-1cbf-11eb-82a0-dfbbdd02fb39.png)
