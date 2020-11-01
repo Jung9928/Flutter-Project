@@ -13,7 +13,7 @@ A new Flutter application.
 
 _**1) Login & Logout & forget Password Page**_
 
-<img src="user-images.githubusercontent.com/45419456/97810960-e23bd980-1cba-11eb-8c21-b3df2bfb31ac.PNG" width="50%", height="60%"></img>
+<img src="https://user-images.githubusercontent.com/45419456/97810960-e23bd980-1cba-11eb-8c21-b3df2bfb31ac.PNG" width="50%"></img>
 
 ![1](https://user-images.githubusercontent.com/45419456/97810960-e23bd980-1cba-11eb-8c21-b3df2bfb31ac.PNG)
 ![image](https://user-images.githubusercontent.com/45419456/97810971-ecf66e80-1cba-11eb-9561-4517ab79a33c.png)
