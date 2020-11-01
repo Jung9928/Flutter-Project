@@ -27,8 +27,8 @@ _**2) Main page & Drawer Widget**_
 
 _**3) Script Page (CRUD)**_
 
-![image](https://user-images.githubusercontent.com/45419456/97696022-4d818200-1ae8-11eb-986a-76a71f92e7e2.png)
-![image](https://user-images.githubusercontent.com/45419456/97696066-596d4400-1ae8-11eb-96d7-941181d85a7b.png)
+![7](https://user-images.githubusercontent.com/45419456/97811043-46f73400-1cbb-11eb-8981-03aca4d1e6aa.PNG)
+![image](https://user-images.githubusercontent.com/45419456/97811074-7efe7700-1cbb-11eb-8a0c-da92dec9290c.png)
 ![image](https://user-images.githubusercontent.com/45419456/97696101-668a3300-1ae8-11eb-8efa-8671007d469e.png)
 ![1](https://user-images.githubusercontent.com/45419456/97697496-6d19aa00-1aea-11eb-9fed-d6771f2eb069.PNG)
 
