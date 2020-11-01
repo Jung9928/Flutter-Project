@@ -11,17 +11,18 @@ A new Flutter application.
 
 #### Screenshot ####
 
-_**1) Login & Logout Page**_
+_**1) Login & Logout & forget Password Page **_
 
 ![1](https://user-images.githubusercontent.com/45419456/97810960-e23bd980-1cba-11eb-8c21-b3df2bfb31ac.PNG)
 ![image](https://user-images.githubusercontent.com/45419456/97810971-ecf66e80-1cba-11eb-9561-4517ab79a33c.png)
+![image](https://user-images.githubusercontent.com/45419456/97810981-ff70a800-1cba-11eb-8175-91281438027c.png)
 
 
 
 _**2) Main page & Drawer Widget**_
 
-![image](https://user-images.githubusercontent.com/45419456/97810981-ff70a800-1cba-11eb-8175-91281438027c.png)
 ![image](https://user-images.githubusercontent.com/45419456/97810992-0d262d80-1cbb-11eb-96ca-95491db12326.png)
+![image](https://user-images.githubusercontent.com/45419456/97811004-16af9580-1cbb-11eb-90b1-150a6c275631.png)
 
 
 _**3) Script Page (CRUD)**_
