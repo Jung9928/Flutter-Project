@@ -54,7 +54,7 @@ _**7) Study Page**_
 ![image](https://user-images.githubusercontent.com/45419456/97811625-2c26be80-1cbf-11eb-9506-a8feacc1b0ad.png)
 
 
--**8) Favorites Page**_
+_**8) Favorites Page**_
 
 ![image](https://user-images.githubusercontent.com/45419456/97811779-0f3ebb00-1cc0-11eb-8676-b08884f8465a.png)
 ![image](https://user-images.githubusercontent.com/45419456/97811782-182f8c80-1cc0-11eb-81f9-b4ae034f3aa8.png)
