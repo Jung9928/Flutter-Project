@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/data/join_or_login.dart';
 import 'package:flutter_firebase_login/helper/login_background.dart';
 import 'package:flutter_firebase_login/screens/forgot_pw.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
 class AuthPage extends StatelessWidget {
@@ -121,10 +122,9 @@ class AuthPage extends StatelessWidget {
     final FirebaseUser user = result.user;
 
     if (user == null) {
-      final snacBar = SnackBar(
-        content: Text('Please try again later.'),
-      );
-      Scaffold.of(context).showSnackBar(snacBar);
+      loginError_Toast();
+    } else {
+      login_Toast();
     }
   }
 
@@ -245,6 +245,30 @@ class AuthPage extends StatelessWidget {
               )),
         ),
       ),
+    );
+  }
+
+  // 로그인 여부를 알려주는 토스트 메시지
+  void login_Toast() {
+    Fluttertoast.showToast(
+      msg: '로그인 성공',
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red[200],
+      fontSize: 20.0,
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT,
+    );
+  }
+
+  // 로그인 여부를 알려주는 토스트 메시지
+  void loginError_Toast() {
+    Fluttertoast.showToast(
+      msg: '로그인 실패\n다시 입력해 주세요.',
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red[200],
+      fontSize: 20.0,
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT,
     );
   }
 

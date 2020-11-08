@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/script/write_script.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class EditPage extends StatefulWidget {
   EditPage({Key key, this.title, this.text, this.date, this.docID})
@@ -34,6 +35,7 @@ class _EditPageState extends State<EditPage> {
               icon: const Icon(Icons.save),
               onPressed: () {
                 updateScript(widget.docID, widget.title, widget.text);
+                edit_toast();
               },
             )
           ],
@@ -94,5 +96,17 @@ class _EditPageState extends State<EditPage> {
       'scriptTitle': name,
       'scriptText': description,
     });
+  }
+
+  // 스크립트 수정 완료를 알려주는 토스트 메시지
+  void edit_toast() {
+    Fluttertoast.showToast(
+      msg: '스크립트 수정 완료',
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red[200],
+      fontSize: 20.0,
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT,
+    );
   }
 }

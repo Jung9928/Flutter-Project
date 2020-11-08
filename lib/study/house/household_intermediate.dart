@@ -16,16 +16,6 @@ class Household_Intermediate extends StatefulWidget {
 class _Household_IntermediateState extends State<Household_Intermediate> {
   BuildContext _context;
 
-  //int _QuestionCount = ; // 영어 문장 인덱스&firestore에서 저장된 영어문장을 읽어올 때 사용되는 인덱스.
-  int _selectedIndex = 1; // bottom navigation bar에서 사용할 변수
-
-  // bottom navigation Bar을 클릭 시, 호출되는 함수.
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -40,7 +30,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
         appBar: AppBar(
           backgroundColor: Colors.red[200],
           title: Text(
-            '집',
+            '은행',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -50,7 +40,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
             Center(
               child: StreamBuilder<QuerySnapshot>(
                 stream: Firestore.instance
-                    .collection("house_intermediate")
+                    .collection("bank_intermediate")
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -63,11 +53,11 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                       return Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: Colors.cyan),
-                          color: Colors.cyan,
+                          border: Border.all(color: Colors.deepPurple),
+                          color: Colors.deepPurple,
                         ),
-                        width: (screenSize.width) * 0.85,
-                        height: height * 0.6,
+                        width: (screenSize.width) * 0.9,
+                        height: width * 1.1,
                         child: Column(
                           children: [
                             Padding(
@@ -81,7 +71,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                                 ),
                               ),
                               width: width * 0.3,
-                              height: height * 0.05,
+                              height: width * 0.095,
                               child: Padding(
                                 child: Text(
                                   (widget.saveIndex + 1).toString() +
@@ -101,16 +91,16 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                border: Border.all(color: Colors.cyan),
+                                border: Border.all(color: Colors.deepPurple),
                                 color: Colors.white,
                               ),
-                              width: width * 0.73,
-                              height: height * 0.40,
+                              width: width * 0.76,
+                              height: width * 0.73,
                               child: Column(
                                 children: <Widget>[
                                   Container(
                                     padding: EdgeInsets.fromLTRB(
-                                        0, width * 0.048, 0, width * 0.12),
+                                        0, width * 0.03, 0, width * 0.12),
                                     child: Text(
                                       snapshot.data
                                           .documents[widget.saveIndex]['text']
@@ -160,7 +150,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                                 children: [
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -180,7 +170,8 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                                       child: Text(
                                         '이전 문장 보기',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,
@@ -188,7 +179,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                                   ),
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -212,7 +203,8 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                                       child: Text(
                                         '즐겨찾기에 추가',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,
@@ -220,7 +212,7 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                                   ),
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -239,7 +231,8 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
                                       child: Text(
                                         '다음 문장 보기',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,
@@ -256,25 +249,6 @@ class _Household_IntermediateState extends State<Household_Intermediate> {
               ),
             ),
           ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('홈'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.star),
-              title: Text('즐겨찾기'),
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.web),
-              title: Text('불러오기'),
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blueAccent,
-          onTap: _onItemTapped,
         ),
       ),
     );

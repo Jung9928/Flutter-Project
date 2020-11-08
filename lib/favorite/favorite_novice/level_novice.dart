@@ -57,8 +57,8 @@ class _LevelNoviceState extends State<LevelNovice> {
                             border: Border.all(color: Colors.red[200]),
                             color: Colors.red[200],
                           ),
-                          width: (screenSize.width) * 0.85,
-                          height: height * 0.6,
+                          width: width * 0.85,
+                          height: height * 0.7,
                           child: Column(
                             children: [
                               Padding(
@@ -96,12 +96,12 @@ class _LevelNoviceState extends State<LevelNovice> {
                                   color: Colors.white,
                                 ),
                                 width: width * 0.73,
-                                height: height * 0.40,
+                                height: height * 0.45,
                                 child: Column(
                                   children: <Widget>[
                                     Container(
                                       padding: EdgeInsets.fromLTRB(
-                                          0, width * 0.048, 0, width * 0.12),
+                                          0, height * 0.028, 0, width * 0.18),
                                       child: Text(
                                         snapshot
                                             .data

@@ -100,7 +100,6 @@ class _MainPageState extends State<MainPage> {
                 backgroundColor: Colors.white,
               ),
               accountEmail: Text(widget.email + '님 반가워요'), // 가져온 email 값 출력
-              onDetailsPressed: () {},
               decoration: BoxDecoration(
                 color: Colors.red[200],
                 borderRadius: BorderRadius.only(
@@ -113,7 +112,7 @@ class _MainPageState extends State<MainPage> {
               leading: Icon(Icons.question_answer, color: Colors.grey[850]),
               title: Text('문의하기'),
               onTap: () {
-                print('hhhh');
+                //print('hhhh');
               },
             ),
             ListTile(
@@ -126,152 +125,165 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      body: Stack(
-        children: <Widget>[
-          BackgroundImage(context), // 배경 이미지를 희미하게 삽입.
-          Container(
-            height: 400,
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Swiper(
-                autoplay: true,
-                scale: 0.9,
-                viewportFraction: 1.5,
-                pagination: SwiperPagination(alignment: Alignment.bottomRight),
-                itemCount: imgList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Image.network(imgList[index]);
-                },
+      body: SafeArea(
+        child: Stack(
+          children: <Widget>[
+            BackgroundImage(context), // 배경 이미지를 희미하게 삽입.
+            Container(
+              height: height * 0.3925,
+              child: Padding(
+                padding: EdgeInsets.all(10),
+                child: Swiper(
+                  autoplay: true,
+                  scale: 0.9,
+                  viewportFraction: 1.5,
+                  pagination:
+                      SwiperPagination(alignment: Alignment.bottomRight),
+                  itemCount: imgList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Image.network(imgList[index]);
+                  },
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-                width * 0.02, height * 0.44, width * 0.02, 0),
-            child: Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const ListTile(
-                    leading: Icon(Icons.border_color),
-                    title: Text(
-                      '나만의 스크립트를 작성해봐요',
-                      style: TextStyle(fontSize: 20),
+            ListView(
+              children: [
+                Container(
+                  margin: EdgeInsets.fromLTRB(
+                      width * 0.02, height * 0.44, width * 0.02, 0),
+                  width: width * 0.96,
+                  child: Card(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const ListTile(
+                          leading: Icon(Icons.border_color),
+                          title: Text(
+                            '나만의 스크립트를 작성해봐요',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ButtonTheme(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: RaisedButton(
+                                child: const Text(
+                                  '작성 하러가기',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                color: Colors.grey[300],
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      CupertinoPageRoute<void>(
+                                          builder: (BuildContext context) {
+                                    return Make_Script();
+                                  }));
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      ButtonTheme(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: RaisedButton(
-                          child: const Text(
-                            '작성 하러가기',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(
+                      width * 0.02, height * 0.01, width * 0.02, 0),
+                  width: width * 0.96,
+                  child: Card(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const ListTile(
+                          leading: Icon(Icons.audiotrack),
+                          title: Text(
+                            'OPIc 유튜브 영상도 있어요',
+                            style: TextStyle(fontSize: 20),
                           ),
-                          color: Colors.grey[300],
-                          onPressed: () {
-                            Navigator.push(context, CupertinoPageRoute<void>(
-                                builder: (BuildContext context) {
-                              return Make_Script();
-                            }));
-                          },
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-                width * 0.02, height * 0.56, width * 0.02, 0),
-            child: Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const ListTile(
-                    leading: Icon(Icons.audiotrack),
-                    title: Text(
-                      'OPIc 유튜브 영상도 있어요',
-                      style: TextStyle(fontSize: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ButtonTheme(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: RaisedButton(
+                                child: const Text(
+                                  '영상 보러가기',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                color: Colors.grey[300],
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute<void>(
+                                          builder: (BuildContext context) {
+                                    return HomeScreen();
+                                  }));
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      ButtonTheme(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: RaisedButton(
-                          child: const Text(
-                            '영상 보러가기',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                Container(
+                  margin: EdgeInsets.fromLTRB(
+                      width * 0.02, height * 0.01, width * 0.02, 0),
+                  width: width * 0.96,
+                  child: Card(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const ListTile(
+                          leading: Icon(Icons.school),
+                          title: Text(
+                            '주제 별로 학습하러 가요',
+                            style: TextStyle(fontSize: 20),
                           ),
-                          color: Colors.grey[300],
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute<void>(
-                                builder: (BuildContext context) {
-                              return HomeScreen();
-                            }));
-                          },
                         ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(
-                width * 0.02, height * 0.68, width * 0.02, 0),
-            child: Card(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  const ListTile(
-                    leading: Icon(Icons.school),
-                    title: Text(
-                      '주제 별로 학습하러 가요',
-                      style: TextStyle(fontSize: 20),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            ButtonTheme(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: RaisedButton(
+                                child: const Text(
+                                  '학습 하러가기',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                color: Colors.grey[300],
+                                onPressed: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute<void>(
+                                          builder: (BuildContext context) {
+                                    return StudyPage();
+                                  }));
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      ButtonTheme(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: RaisedButton(
-                          child: const Text(
-                            '학습 하러가기',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          color: Colors.grey[300],
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute<void>(
-                                builder: (BuildContext context) {
-                              return StudyPage();
-                            }));
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                    ],
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

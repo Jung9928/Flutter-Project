@@ -96,12 +96,12 @@ class _LevelImState extends State<LevelIm> {
                                   color: Colors.white,
                                 ),
                                 width: width * 0.73,
-                                height: height * 0.40,
+                                height: height * 0.45,
                                 child: Column(
                                   children: <Widget>[
                                     Container(
                                       padding: EdgeInsets.fromLTRB(
-                                          0, width * 0.048, 0, width * 0.12),
+                                          0, width * 0.048, 0, width * 0.18),
                                       child: Text(
                                         snapshot
                                             .data

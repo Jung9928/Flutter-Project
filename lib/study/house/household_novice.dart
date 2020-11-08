@@ -55,8 +55,8 @@ class _Household_NoviceState extends State<Household_Novice> {
                           border: Border.all(color: Colors.red[200]),
                           color: Colors.red[200],
                         ),
-                        width: (screenSize.width) * 0.85,
-                        height: height * 0.6,
+                        width: (screenSize.width) * 0.9,
+                        height: width * 1.1,
                         child: Column(
                           children: [
                             Padding(
@@ -70,7 +70,7 @@ class _Household_NoviceState extends State<Household_Novice> {
                                 ),
                               ),
                               width: width * 0.3,
-                              height: height * 0.05,
+                              height: width * 0.095,
                               child: Padding(
                                 child: Text(
                                   (widget.saveIndex + 1).toString() +
@@ -93,13 +93,13 @@ class _Household_NoviceState extends State<Household_Novice> {
                                 border: Border.all(color: Colors.red[200]),
                                 color: Colors.white,
                               ),
-                              width: width * 0.73,
-                              height: height * 0.40,
+                              width: width * 0.76,
+                              height: width * 0.73,
                               child: Column(
                                 children: <Widget>[
                                   Container(
                                     padding: EdgeInsets.fromLTRB(
-                                        0, width * 0.048, 0, width * 0.12),
+                                        0, width * 0.03, 0, width * 0.12),
                                     child: Text(
                                       snapshot.data
                                           .documents[widget.saveIndex]['text']
@@ -149,7 +149,7 @@ class _Household_NoviceState extends State<Household_Novice> {
                                 children: [
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -169,7 +169,8 @@ class _Household_NoviceState extends State<Household_Novice> {
                                       child: Text(
                                         '이전 문장 보기',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,
@@ -177,7 +178,7 @@ class _Household_NoviceState extends State<Household_Novice> {
                                   ),
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -201,7 +202,8 @@ class _Household_NoviceState extends State<Household_Novice> {
                                       child: Text(
                                         '즐겨찾기에 추가',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,
@@ -209,7 +211,7 @@ class _Household_NoviceState extends State<Household_Novice> {
                                   ),
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -228,7 +230,8 @@ class _Household_NoviceState extends State<Household_Novice> {
                                       child: Text(
                                         '다음 문장 보기',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,

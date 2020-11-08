@@ -29,7 +29,12 @@ class _Make_ScriptState extends State<Make_Script> {
           Container(
             height: MediaQuery.of(context).size.height,
             child: StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance.collection("test").snapshots(),
+              stream: Firestore.instance
+                  .collection("test")
+                  .orderBy('scriptDate',
+                      descending:
+                          true) // 가장 최근에 저장한 내용을 최상단에 노출할 수 있게 정렬하여 데이터를 가져옴.
+                  .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) return Text("Error: ${snapshot.error}");

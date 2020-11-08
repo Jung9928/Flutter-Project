@@ -16,16 +16,6 @@ class Household_Advanced extends StatefulWidget {
 class _Household_AdvancedState extends State<Household_Advanced> {
   BuildContext _context;
 
-  //int _QuestionCount = ; // 영어 문장 인덱스&firestore에서 저장된 영어문장을 읽어올 때 사용되는 인덱스.
-  int _selectedIndex = 1; // bottom navigation bar에서 사용할 변수
-
-  // bottom navigation Bar을 클릭 시, 호출되는 함수.
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -59,211 +49,200 @@ class _Household_AdvancedState extends State<Household_Advanced> {
                     case ConnectionState.waiting:
                       return Center(child: CircularProgressIndicator());
                     default:
-                      if (snapshot.data.documents.isEmpty) {
-                        return Container(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '학습할 데이터가 존재하지 않습니다.',
-                            style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue),
-                            textAlign: TextAlign.center,
-                          ),
-                        );
-                      } else {
-                        return Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Colors.cyan),
-                            color: Colors.cyan,
-                          ),
-                          width: (screenSize.width) * 0.85,
-                          height: height * 0.6,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.only(bottom: width * 0.05),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(40),
-                                  ),
-                                ),
-                                width: width * 0.3,
-                                height: height * 0.05,
-                                child: Padding(
-                                  child: Text(
-                                    (widget.saveIndex + 1).toString() +
-                                        ' / ' +
-                                        widget.sentencefullcount.toString(),
-                                    style: TextStyle(
-                                        fontSize: width * 0.055,
-                                        fontWeight: FontWeight.bold),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  padding: EdgeInsets.only(top: height * 0.01),
+                      return Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(color: Colors.red[200]),
+                          color: Colors.red[200],
+                        ),
+                        width: (screenSize.width) * 0.9,
+                        height: width * 1.1,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(bottom: width * 0.05),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(40),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(bottom: width * 0.05),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: Colors.deepPurple),
-                                  color: Colors.white,
+                              width: width * 0.3,
+                              height: width * 0.095,
+                              child: Padding(
+                                child: Text(
+                                  (widget.saveIndex + 1).toString() +
+                                      ' / ' +
+                                      widget.sentencefullcount.toString(),
+                                  style: TextStyle(
+                                      fontSize: width * 0.055,
+                                      fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
                                 ),
-                                width: width * 0.73,
-                                height: height * 0.40,
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.fromLTRB(
-                                          0, width * 0.048, 0, width * 0.12),
-                                      child: Text(
-                                        snapshot.data
-                                            .documents[widget.saveIndex]['text']
-                                            .toString(),
-                                        style: TextStyle(
-                                          fontSize: width * 0.055,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    Expanded(
-                                        child: Divider(
-                                      thickness: 0.3,
-                                      color: Colors.black,
-                                    )),
-                                    Text(
-                                      snapshot
-                                          .data
-                                          .documents[widget.saveIndex]
-                                              ['translation']
+                                padding: EdgeInsets.only(top: height * 0.01),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(bottom: width * 0.05),
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(color: Colors.red[200]),
+                                color: Colors.white,
+                              ),
+                              width: width * 0.76,
+                              height: width * 0.73,
+                              child: Column(
+                                children: <Widget>[
+                                  Container(
+                                    padding: EdgeInsets.fromLTRB(
+                                        0, width * 0.03, 0, width * 0.12),
+                                    child: Text(
+                                      snapshot.data
+                                          .documents[widget.saveIndex]['text']
                                           .toString(),
                                       style: TextStyle(
-                                        fontSize: width * 0.048,
+                                        fontSize: width * 0.055,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       textAlign: TextAlign.center,
                                     ),
-                                    Expanded(
-                                      child: Container(),
+                                  ),
+                                  Expanded(
+                                      child: Divider(
+                                    thickness: 0.3,
+                                    color: Colors.black,
+                                  )),
+                                  Text(
+                                    snapshot
+                                        .data
+                                        .documents[widget.saveIndex]
+                                            ['translation']
+                                        .toString(),
+                                    style: TextStyle(
+                                      fontSize: width * 0.048,
+                                      fontWeight: FontWeight.bold,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.all(width * 0.012),
-                                    )
-                                  ],
-                                ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  Expanded(
+                                    child: Container(),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.all(width * 0.012),
+                                  )
+                                ],
                               ),
-                              Expanded(
-                                child: Container(),
-                              ),
-                              // 이전 문장 보기, 즐겨찾기 추가, 다음문장보기 위젯의 시작.
-                              Container(
-                                padding: EdgeInsets.only(bottom: width * 0.048),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ButtonTheme(
-                                      minWidth: width * 0.2,
-                                      height: height * 0.05,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: RaisedButton(
-                                        onPressed: () {
-                                          if (widget.saveIndex <
-                                                  widget.sentencefullcount &&
-                                              widget.saveIndex > 0) {
-                                            setState(() {
-                                              widget.saveIndex--;
-                                              updateIndex(widget.saveIndex);
-                                            });
-                                          } else {
-                                            showAlertDialog(widget.saveIndex);
-                                          }
-                                        },
-                                        child: Text(
-                                          '이전 문장 보기',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        color: Colors.white,
-                                        textColor: Colors.black,
-                                      ),
+                            ),
+                            Expanded(
+                              child: Container(),
+                            ),
+                            // 이전 문장 보기, 즐겨찾기 추가, 다음문장보기 위젯의 시작.
+                            Container(
+                              padding: EdgeInsets.only(bottom: width * 0.048),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ButtonTheme(
+                                    minWidth: width * 0.2,
+                                    height: width * 0.083,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                    ButtonTheme(
-                                      minWidth: width * 0.2,
-                                      height: height * 0.05,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: RaisedButton(
-                                        // 즐겨찾기 버튼 클릭 시, 현재 보고있는 level의 영어문장을 firestore의 즐겨찾기 컬렉션에 저장.
-                                        onPressed: () {
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        if (widget.saveIndex <
+                                                widget.sentencefullcount &&
+                                            widget.saveIndex > 0) {
                                           setState(() {
-                                            Add_Favorite(
-                                                snapshot
-                                                    .data
-                                                    .documents[widget.saveIndex]
-                                                        ['text']
-                                                    .toString(),
-                                                snapshot
-                                                    .data
-                                                    .documents[widget.saveIndex]
-                                                        ['translation']
-                                                    .toString());
+                                            widget.saveIndex--;
+                                            updateIndex(widget.saveIndex);
                                           });
-                                        },
-                                        child: Text(
-                                          '즐겨찾기에 추가',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        color: Colors.white,
-                                        textColor: Colors.black,
+                                        } else {
+                                          showAlertDialog(widget.saveIndex);
+                                        }
+                                      },
+                                      child: Text(
+                                        '이전 문장 보기',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
+                                      color: Colors.white,
+                                      textColor: Colors.black,
                                     ),
-                                    ButtonTheme(
-                                      minWidth: width * 0.2,
-                                      height: height * 0.05,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: RaisedButton(
-                                        onPressed: () {
-                                          if (widget.saveIndex <
-                                              widget.sentencefullcount - 1) {
-                                            setState(() {
-                                              widget.saveIndex++;
-                                              updateIndex(widget.saveIndex);
-                                            });
-                                          } else {
-                                            showAlertDialog(widget.saveIndex);
-                                          }
-                                        },
-                                        child: Text(
-                                          '다음 문장 보기',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                        color: Colors.white,
-                                        textColor: Colors.black,
-                                      ),
+                                  ),
+                                  ButtonTheme(
+                                    minWidth: width * 0.2,
+                                    height: width * 0.083,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                  ],
-                                ),
+                                    child: RaisedButton(
+                                      // 즐겨찾기 버튼 클릭 시, 현재 보고있는 level의 영어문장을 firestore의 즐겨찾기 컬렉션에 저장.
+                                      onPressed: () {
+                                        setState(() {
+                                          Add_Favorite(
+                                              snapshot
+                                                  .data
+                                                  .documents[widget.saveIndex]
+                                                      ['text']
+                                                  .toString(),
+                                              snapshot
+                                                  .data
+                                                  .documents[widget.saveIndex]
+                                                      ['translation']
+                                                  .toString());
+                                        });
+                                      },
+                                      child: Text(
+                                        '즐겨찾기에 추가',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
+                                      ),
+                                      color: Colors.white,
+                                      textColor: Colors.black,
+                                    ),
+                                  ),
+                                  ButtonTheme(
+                                    minWidth: width * 0.2,
+                                    height: width * 0.083,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: RaisedButton(
+                                      onPressed: () {
+                                        if (widget.saveIndex <
+                                            widget.sentencefullcount - 1) {
+                                          setState(() {
+                                            widget.saveIndex++;
+                                            updateIndex(widget.saveIndex);
+                                          });
+                                        } else {
+                                          showAlertDialog(widget.saveIndex);
+                                        }
+                                      },
+                                      child: Text(
+                                        '다음 문장 보기',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
+                                      ),
+                                      color: Colors.white,
+                                      textColor: Colors.black,
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        );
-                      }
+                            ),
+                          ],
+                        ),
+                      );
                   }
                 },
               ),

@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class BankNovice extends StatefulWidget {
-  BankNovice({Key key, this.saveIndex, this.NovicefullCount}) : super(key: key);
+  BankNovice({Key key, this.saveIndex, this.sentencefullcount})
+      : super(key: key);
 
   int saveIndex; // firestore에 저장된 가장 최근에 본 영어 문장 인덱스를 저장할 변수.
-  int NovicefullCount; // novice 레벨의 영어문장 총 갯수
+  int sentencefullcount; // novice 레벨의 영어문장 총 갯수
 
   @override
   _BankNoviceState createState() => _BankNoviceState();
@@ -14,9 +15,6 @@ class BankNovice extends StatefulWidget {
 
 class _BankNoviceState extends State<BankNovice> {
   BuildContext _context;
-
-  //int _QuestionCount = ; // 영어 문장 인덱스&firestore에서 저장된 영어문장을 읽어올 때 사용되는 인덱스.
-  int _selectedIndex = 1; // bottom navigation bar에서 사용할 변수
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,7 @@ class _BankNoviceState extends State<BankNovice> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red[200],
+          backgroundColor: Colors.deepPurple,
           title: Text(
             '은행',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -57,8 +55,8 @@ class _BankNoviceState extends State<BankNovice> {
                           border: Border.all(color: Colors.deepPurple),
                           color: Colors.deepPurple,
                         ),
-                        width: (screenSize.width) * 0.85,
-                        height: height * 0.6,
+                        width: (screenSize.width) * 0.9,
+                        height: width * 1.1,
                         child: Column(
                           children: [
                             Padding(
@@ -72,12 +70,12 @@ class _BankNoviceState extends State<BankNovice> {
                                 ),
                               ),
                               width: width * 0.3,
-                              height: height * 0.05,
+                              height: width * 0.095,
                               child: Padding(
                                 child: Text(
                                   (widget.saveIndex + 1).toString() +
                                       ' / ' +
-                                      widget.NovicefullCount.toString(),
+                                      widget.sentencefullcount.toString(),
                                   style: TextStyle(
                                       fontSize: width * 0.055,
                                       fontWeight: FontWeight.bold),
@@ -95,13 +93,13 @@ class _BankNoviceState extends State<BankNovice> {
                                 border: Border.all(color: Colors.deepPurple),
                                 color: Colors.white,
                               ),
-                              width: width * 0.73,
-                              height: height * 0.40,
+                              width: width * 0.76,
+                              height: width * 0.73,
                               child: Column(
                                 children: <Widget>[
                                   Container(
                                     padding: EdgeInsets.fromLTRB(
-                                        0, width * 0.048, 0, width * 0.12),
+                                        0, width * 0.03, 0, width * 0.12),
                                     child: Text(
                                       snapshot.data
                                           .documents[widget.saveIndex]['text']
@@ -151,14 +149,14 @@ class _BankNoviceState extends State<BankNovice> {
                                 children: [
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: RaisedButton(
                                       onPressed: () {
                                         if (widget.saveIndex <
-                                                widget.NovicefullCount &&
+                                                widget.sentencefullcount &&
                                             widget.saveIndex > 0) {
                                           setState(() {
                                             widget.saveIndex--;
@@ -171,7 +169,8 @@ class _BankNoviceState extends State<BankNovice> {
                                       child: Text(
                                         '이전 문장 보기',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,
@@ -179,7 +178,7 @@ class _BankNoviceState extends State<BankNovice> {
                                   ),
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
@@ -203,7 +202,8 @@ class _BankNoviceState extends State<BankNovice> {
                                       child: Text(
                                         '즐겨찾기에 추가',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,
@@ -211,14 +211,14 @@ class _BankNoviceState extends State<BankNovice> {
                                   ),
                                   ButtonTheme(
                                     minWidth: width * 0.2,
-                                    height: height * 0.05,
+                                    height: width * 0.083,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: RaisedButton(
                                       onPressed: () {
                                         if (widget.saveIndex <
-                                            widget.NovicefullCount - 1) {
+                                            widget.sentencefullcount - 1) {
                                           setState(() {
                                             widget.saveIndex++;
                                             updateIndex(widget.saveIndex);
@@ -230,7 +230,8 @@ class _BankNoviceState extends State<BankNovice> {
                                       child: Text(
                                         '다음 문장 보기',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.bold),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: width * 0.03),
                                       ),
                                       color: Colors.white,
                                       textColor: Colors.black,
@@ -258,7 +259,7 @@ class _BankNoviceState extends State<BankNovice> {
       context: _context,
       barrierDismissible: false, // 반드시 탭 버튼을 누를건가
       builder: (BuildContext context) {
-        if (count == widget.NovicefullCount - 1) {
+        if (count == widget.sentencefullcount - 1) {
           return AlertDialog(
             title: Text('마지막 문장입니다.'),
             //content: Text("하나의 문항만을 체크해 주셔야 \n다음화면으로 이동됩니다."),

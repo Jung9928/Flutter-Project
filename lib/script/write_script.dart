@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 // 컬렉션 명
 String colName = 'test';
@@ -28,6 +29,7 @@ class _WriteScriptState extends State<WriteScript> {
             icon: const Icon(Icons.save),
             onPressed: () {
               createScript(scriptName, scriptContent);
+              save_toast();
 //              Scaffold.of(context)
 //                  .showSnackBar(SnackBar(content: Text('스크립트가 저장되었습니다.')));
             },
@@ -80,5 +82,17 @@ class _WriteScriptState extends State<WriteScript> {
       'scriptText': description,
       'scriptDate': Timestamp.now(),
     });
+  }
+
+  // 스크립트 저장 완료를 알려주는 토스트 메시지
+  void save_toast() {
+    Fluttertoast.showToast(
+      msg: '스크립트 저장 완료',
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: Colors.red[200],
+      fontSize: 20.0,
+      textColor: Colors.white,
+      toastLength: Toast.LENGTH_SHORT,
+    );
   }
 }

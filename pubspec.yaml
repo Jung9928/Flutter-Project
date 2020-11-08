@@ -39,7 +39,7 @@ dependencies:
   fluttertoast: ^7.1.1
 
 #  url_launcher: ^5.7.1
-#  firebase_core:
+  firebase_core: ^0.4.5
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase_login/study/bank/bank_advanced.dart';
 import 'package:flutter_firebase_login/study/bank/bank_intermediate.dart';
 import 'package:flutter_firebase_login/study/bank/bank_novice.dart';
 
@@ -27,7 +28,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.red[200],
+          backgroundColor: Colors.deepPurple,
           title: Text(
             '은행 난이도 선택',
             style: TextStyle(fontWeight: FontWeight.bold),
@@ -41,7 +42,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
               color: Colors.deepPurple,
             ),
             width: (screenSize.width) * 0.85,
-            height: height * 0.63,
+            height: width * 1.2,
             child: Column(
               children: [
                 Padding(
@@ -54,16 +55,17 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                     color: Colors.white,
                   ),
                   width: width * 0.73,
-                  height: height * 0.30,
-                  child: Column(
+                  height: width * 0.49,
+                  child: ListView(
                     children: <Widget>[
                       Container(
-                        padding: EdgeInsets.fromLTRB(
-                            0, width * 0.048, 0, width * 0.12),
+                        margin: EdgeInsets.fromLTRB(
+                            0, height * 0.025, 0, width * 0.12),
+                        height: height * 0.3,
                         child: Text(
                           'OPIc 주제 별 문장 학습을 \n진행하기 전에 원하는 \n난이도를 선택해 주세요. \n\n선택하신 난이도에 맞는 문장을 \n학습하실 수 있답니다^^',
                           style: TextStyle(
-                            fontSize: width * 0.050,
+                            fontSize: width * 0.05,
                             fontWeight: FontWeight.bold,
                           ),
                           textAlign: TextAlign.center,
@@ -78,16 +80,21 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.red[200]),
+                    border: Border.all(color: Colors.deepPurple),
                     color: Colors.white,
                   ),
                   width: width * 0.73,
-                  height: height * 0.17,
+                  height: width * 0.41,
                   child: ListView(
-                    padding: EdgeInsets.only(bottom: width * 0.048),
+                    //padding: EdgeInsets.only(bottom: width * 0.048),
                     children: [
                       CheckboxListTile(
-                        title: const Text('NL~NH 수준의 문장을 원해요.'),
+                        title: Text(
+                          'NL~NH 수준의 문장을 원해요.',
+                          style: TextStyle(
+                            fontSize: width * 0.029,
+                          ),
+                        ),
                         value: _novice,
                         onChanged: (bool value) {
                           setState(() {
@@ -98,10 +105,16 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                               _count--;
                           });
                         },
-                        secondary: const Icon(Icons.hourglass_empty),
+                        secondary: Icon(
+                          Icons.hourglass_empty,
+                          size: width * 0.055,
+                        ),
                       ),
                       CheckboxListTile(
-                        title: const Text('IL~IH 수준의 문장을 원해요.'),
+                        title: Text('IL~IH 수준의 문장을 원해요.',
+                            style: TextStyle(
+                              fontSize: width * 0.029,
+                            )),
                         value: _intermediate,
                         onChanged: (bool value) {
                           setState(() {
@@ -112,10 +125,14 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                               _count--;
                           });
                         },
-                        secondary: const Icon(Icons.hourglass_empty),
+                        secondary:
+                            Icon(Icons.hourglass_empty, size: width * 0.055),
                       ),
                       CheckboxListTile(
-                        title: const Text('AL 수준의 문장을 원해요.'),
+                        title: Text('AL 수준의 문장을 원해요.',
+                            style: TextStyle(
+                              fontSize: width * 0.029,
+                            )),
                         value: _advanced,
                         onChanged: (bool value) {
                           setState(() {
@@ -126,7 +143,8 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                               _count--;
                           });
                         },
-                        secondary: const Icon(Icons.hourglass_empty),
+                        secondary:
+                            Icon(Icons.hourglass_empty, size: width * 0.055),
                       ),
                     ],
                   ),
@@ -137,55 +155,57 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                 Padding(
                   padding: EdgeInsets.only(bottom: width * 0.05),
                 ),
-                Container(
-                  padding: EdgeInsets.only(bottom: width * 0.048),
-                  child: ButtonTheme(
-                    minWidth: width * 0.73,
-                    height: height * 0.05,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-
-                    // 체크한 level에 맞는 route로 이동.
-                    child: RaisedButton(
-                      onPressed: () async {
-                        if (_count == 1 && _novice == true) {
-                          await showAlertNoviceDataLoadDialog();
-                          Navigator.push(context, MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                            return BankNovice(
-                              saveIndex: _index,
-                              NovicefullCount: _sentencefullcount,
-                            );
-                          }));
-                        } else if (_count == 1 && _intermediate == true) {
-                          await showAlertImDataLoadDialog();
-                          Navigator.push(context, MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                            return BankIntermediate(
-                              saveIndex: _index,
-                              NovicefullCount: _sentencefullcount,
-                            );
-                          }));
-                        } else if (_count == 1 && _advanced == true) {
-                          await showAlertAlDataLoadDialog();
-                          Navigator.push(context, MaterialPageRoute<void>(
-                              builder: (BuildContext context) {
-                            return BankIntermediate(
-                              saveIndex: _index,
-                              NovicefullCount: _sentencefullcount,
-                            );
-                          }));
-                        } else {
-                          showAlertDialog();
-                        }
-                      },
-                      child: Text(
-                        '학습 하러 가기',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                Flexible(
+                  child: Container(
+                    padding: EdgeInsets.only(bottom: width * 0.048),
+                    child: ButtonTheme(
+                      minWidth: width * 0.73,
+                      height: height * 0.05,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      color: Colors.white,
-                      textColor: Colors.black,
+
+                      // 체크한 level에 맞는 route로 이동.
+                      child: RaisedButton(
+                        onPressed: () async {
+                          if (_count == 1 && _novice == true) {
+                            await showAlertNoviceDataLoadDialog();
+                            Navigator.push(context, MaterialPageRoute<void>(
+                                builder: (BuildContext context) {
+                              return BankNovice(
+                                saveIndex: _index,
+                                sentencefullcount: _sentencefullcount,
+                              );
+                            }));
+                          } else if (_count == 1 && _intermediate == true) {
+                            await showAlertImDataLoadDialog();
+                            Navigator.push(context, MaterialPageRoute<void>(
+                                builder: (BuildContext context) {
+                              return BankIntermediate(
+                                saveIndex: _index,
+                                sentencefullcount: _sentencefullcount,
+                              );
+                            }));
+                          } else if (_count == 1 && _advanced == true) {
+                            await showAlertAlDataLoadDialog();
+                            Navigator.push(context, MaterialPageRoute<void>(
+                                builder: (BuildContext context) {
+                              return BankAdvanced(
+                                saveIndex: _index,
+                                sentencefullcount: _sentencefullcount,
+                              );
+                            }));
+                          } else {
+                            showAlertDialog();
+                          }
+                        },
+                        child: Text(
+                          '학습 하러 가기',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        color: Colors.white,
+                        textColor: Colors.black,
+                      ),
                     ),
                   ),
                 ),
@@ -288,7 +308,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('데이터 불러오기 알림'),
-          content: Text("가장 최근에 학습한 영어문장을 저장소로부터\n가져오시겠습니까?"),
+          content: Text("가장 최근에 학습한 영어문장을 저장소에서\n가져오시겠습니까?"),
           actions: <Widget>[
             FlatButton(
               child: Text('데이터 가져오기'),
@@ -319,7 +339,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('데이터 불러오기 알림'),
-          content: Text("가장 최근에 학습한 영어문장을 저장소로부터\n가져오시겠습니까?"),
+          content: Text("가장 최근에 학습한 영어문장을 저장소에서\n가져오시겠습니까?"),
           actions: <Widget>[
             FlatButton(
               child: Text('데이터 가져오기'),
@@ -350,7 +370,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('데이터 불러오기 알림'),
-          content: Text("가장 최근에 학습한 영어문장을 저장소로부터\n가져오시겠습니까?"),
+          content: Text("가장 최근에 학습한 영어문장을 저장소에서\n가져오시겠습니까?"),
           actions: <Widget>[
             FlatButton(
               child: Text('데이터 가져오기'),

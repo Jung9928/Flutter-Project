@@ -84,8 +84,8 @@ class _ManagementState extends State<Management> {
                     return ListView(children: <Widget>[
                       SizedBox(height: width * 0.1),
                       CircularPercentIndicator(
-                        radius: 120.0,
-                        lineWidth: 13.0,
+                        radius: height * 0.14,
+                        lineWidth: height * 0.015,
                         animation: true,
                         percent: percentNovice,
                         center: new Text(
@@ -103,8 +103,8 @@ class _ManagementState extends State<Management> {
                       ),
                       SizedBox(height: width * 0.1),
                       CircularPercentIndicator(
-                        radius: 120.0,
-                        lineWidth: 13.0,
+                        radius: height * 0.14,
+                        lineWidth: height * 0.015,
                         animation: true,
                         percent: 0.7,
                         center: new Text(
@@ -122,8 +122,8 @@ class _ManagementState extends State<Management> {
                       ),
                       SizedBox(height: width * 0.1),
                       CircularPercentIndicator(
-                        radius: 120.0,
-                        lineWidth: 13.0,
+                        radius: height * 0.14,
+                        lineWidth: height * 0.015,
                         animation: true,
                         percent: 0.7,
                         center: new Text(
