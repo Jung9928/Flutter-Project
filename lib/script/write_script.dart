@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 // 컬렉션 명
-String colName = 'test';
+//String colName = 'script';
 
 // 필드명
 String scriptName = '';
@@ -12,6 +12,10 @@ String scriptContent = '';
 String scriptDate = '';
 
 class WriteScript extends StatefulWidget {
+  WriteScript({this.uid});
+
+  final String uid; // 로그인한 사용자의 firebase uid 값.
+
   @override
   _WriteScriptState createState() => _WriteScriptState();
 }
@@ -77,7 +81,7 @@ class _WriteScriptState extends State<WriteScript> {
 
   // 스크립트 생성 시, firestore에 생성한 스크립트 데이터 저장.
   void createScript(String name, String description) {
-    Firestore.instance.collection(colName).add({
+    Firestore.instance.collection(widget.uid + '_script').add({
       'scriptTitle': name,
       'scriptText': description,
       'scriptDate': Timestamp.now(),

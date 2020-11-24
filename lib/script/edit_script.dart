@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_firebase_login/script/write_script.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class EditPage extends StatefulWidget {
-  EditPage({Key key, this.title, this.text, this.date, this.docID})
+  EditPage({Key key, this.title, this.text, this.date, this.docID, this.uid})
       : super(key: key);
 
   String title;
   String text;
   String date;
   String docID;
+  final String uid;
 
   @override
   _EditPageState createState() => _EditPageState();
@@ -45,7 +45,7 @@ class _EditPageState extends State<EditPage> {
 
   loadBuilder() {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection("test").snapshots(),
+      stream: Firestore.instance.collection(widget.uid + "_script").snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return Text("Error: ${snapshot.error}");
         switch (snapshot.connectionState) {
@@ -92,7 +92,10 @@ class _EditPageState extends State<EditPage> {
 
   // 스크립트 수정하기 (firestore 데이터 갱신 / document ID를 모를 경우)
   void updateScript(String docID, String name, String description) {
-    Firestore.instance.collection(colName).document(docID).updateData({
+    Firestore.instance
+        .collection(widget.uid + '_script')
+        .document(docID)
+        .updateData({
       'scriptTitle': name,
       'scriptText': description,
     });

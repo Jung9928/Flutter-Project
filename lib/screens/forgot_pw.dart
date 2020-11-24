@@ -17,7 +17,7 @@ class _ForgetPwState extends State<ForgetPw> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Forget Password'),
+          title: Text('비밀번호 찾기'),
         ),
         body: Form(
           key: _formKey,
@@ -45,7 +45,7 @@ class _ForgetPwState extends State<ForgetPw> {
                     await FirebaseAuth.instance
                         .sendPasswordResetEmail(email: _emailController.text);
                     final snacBar = SnackBar(
-                      content: Text('비밀번호 초기화 전에 이메일이 맞는지 확인해주세요.'),
+                      content: Text('비밀번호 초기화 관련 메일이 전송되었습니다.'),
                     );
                     Scaffold.of(_formKey.currentContext).showSnackBar(snacBar);
                   },

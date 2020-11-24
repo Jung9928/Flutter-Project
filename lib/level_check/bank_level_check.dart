@@ -5,6 +5,10 @@ import 'package:flutter_firebase_login/study/bank/bank_intermediate.dart';
 import 'package:flutter_firebase_login/study/bank/bank_novice.dart';
 
 class BankLevelCheck extends StatefulWidget {
+  BankLevelCheck({this.uid});
+
+  final String uid;
+
   @override
   BankLevelCheckState createState() => BankLevelCheckState();
 }
@@ -24,6 +28,8 @@ class BankLevelCheckState extends State<BankLevelCheck> {
     double width = screenSize.width;
     double height = screenSize.height;
     _context = context;
+
+    print(widget.uid);
 
     return SafeArea(
       child: Scaffold(
@@ -175,6 +181,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                               return BankNovice(
                                 saveIndex: _index,
                                 sentencefullcount: _sentencefullcount,
+                                uid: widget.uid,
                               );
                             }));
                           } else if (_count == 1 && _intermediate == true) {
@@ -184,6 +191,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                               return BankIntermediate(
                                 saveIndex: _index,
                                 sentencefullcount: _sentencefullcount,
+                                uid: widget.uid,
                               );
                             }));
                           } else if (_count == 1 && _advanced == true) {
@@ -193,6 +201,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
                               return BankAdvanced(
                                 saveIndex: _index,
                                 sentencefullcount: _sentencefullcount,
+                                uid: widget.uid,
                               );
                             }));
                           } else {
@@ -244,7 +253,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
   // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
   void getBankNoviceIndexData() async {
     await Firestore.instance
-        .collection('save_bank_novice_index')
+        .collection(widget.uid + '_save_bank_novice_index')
         .document('index')
         .get()
         .then((idx) {
@@ -256,7 +265,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
   // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
   void getBankIMIndexData() async {
     await Firestore.instance
-        .collection('save_bank_intermediate_index')
+        .collection(widget.uid + '_save_bank_intermediate_index')
         .document('index')
         .get()
         .then((idx) {
@@ -268,7 +277,7 @@ class BankLevelCheckState extends State<BankLevelCheck> {
   // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
   void getBankALIndexData() async {
     await Firestore.instance
-        .collection('save_bank_al_index')
+        .collection(widget.uid + '_save_bank_al_index')
         .document('index')
         .get()
         .then((idx) {

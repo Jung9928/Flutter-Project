@@ -2,17 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/script/edit_script.dart';
-import 'package:flutter_firebase_login/script/write_script.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ViewPage extends StatefulWidget {
-  ViewPage({Key key, this.title, this.text, this.date, this.docID})
+  ViewPage({Key key, this.title, this.text, this.date, this.docID, this.uid})
       : super(key: key);
 
   final String title;
   final String text;
   final String date;
   final String docID;
+  final String uid;
 
   @override
   _ViewPageState createState() => _ViewPageState();
@@ -20,6 +20,7 @@ class ViewPage extends StatefulWidget {
 
 class _ViewPageState extends State<ViewPage> {
   BuildContext _context;
+
   @override
   Widget build(BuildContext context) {
     _context = context;
@@ -46,6 +47,7 @@ class _ViewPageState extends State<ViewPage> {
                               text: widget.text,
                               date: widget.date,
                               docID: widget.docID,
+                              uid: widget.uid,
                             )));
               },
             )
@@ -61,7 +63,7 @@ class _ViewPageState extends State<ViewPage> {
 
   loadBuilder() {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection("test").snapshots(),
+      stream: Firestore.instance.collection(widget.uid + "_script").snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) return Text("Error: ${snapshot.error}");
         switch (snapshot.connectionState) {
@@ -147,6 +149,9 @@ class _ViewPageState extends State<ViewPage> {
   }
 
   void deleteScript(String docID) {
-    Firestore.instance.collection(colName).document(docID).delete();
+    Firestore.instance
+        .collection(widget.uid + '_script')
+        .document(docID)
+        .delete();
   }
 }

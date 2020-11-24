@@ -1,9 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase_login/level_check/bank_level_check.dart';
 import 'package:flutter_firebase_login/level_check/house_level_check.dart';
 
 class StudyPage extends StatefulWidget {
+  StudyPage({this.uid});
+
+  final String uid;
+
   @override
   _StudyPageState createState() => _StudyPageState();
 }
@@ -82,10 +87,15 @@ class _StudyPageState extends State<StudyPage> {
                 side: BorderSide(color: Colors.white),
               ),
               child: InkWell(
-                onTap: () {
+                onTap: () async {
+                  await createSaveHouseNoviceIndex();
+                  await createSaveHouseIntermediateIndex();
+                  await createSaveHouseALIndex();
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck(
+                      uid: widget.uid,
+                    );
                   }));
                 },
                 child: Center(
@@ -129,7 +139,9 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return BankLevelCheck();
+                    return BankLevelCheck(
+                      uid: widget.uid,
+                    );
                   }));
                 },
                 child: Center(
@@ -173,7 +185,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -217,7 +229,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -261,7 +273,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -305,7 +317,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -349,7 +361,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -393,7 +405,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -437,7 +449,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -481,7 +493,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -525,7 +537,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -569,7 +581,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -613,7 +625,7 @@ class _StudyPageState extends State<StudyPage> {
                 onTap: () {
                   Navigator.push(context,
                       MaterialPageRoute<void>(builder: (BuildContext context) {
-                    return LevelCheck();
+                    return HouseLevelCheck();
                   }));
                 },
                 child: Center(
@@ -640,6 +652,27 @@ class _StudyPageState extends State<StudyPage> {
           ),
         );
     }
+  }
+
+  Future<void> createSaveHouseNoviceIndex() async {
+    await Firestore.instance
+        .collection(widget.uid + '_save_house_novice_index')
+        .document('index')
+        .setData({'textIndex': 0});
+  }
+
+  Future<void> createSaveHouseIntermediateIndex() async {
+    await Firestore.instance
+        .collection(widget.uid + '_save_house_intermediate_index')
+        .document('index')
+        .setData({'textIndex': 0});
+  }
+
+  Future<void> createSaveHouseALIndex() async {
+    await Firestore.instance
+        .collection(widget.uid + '_save_house_al_index')
+        .document('index')
+        .setData({'textIndex': 0});
   }
 }
 

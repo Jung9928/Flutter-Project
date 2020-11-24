@@ -4,12 +4,16 @@ import 'package:flutter_firebase_login/study/house/household_advanced.dart';
 import 'package:flutter_firebase_login/study/house/household_intermediate.dart';
 import 'package:flutter_firebase_login/study/house/household_novice.dart';
 
-class LevelCheck extends StatefulWidget {
+class HouseLevelCheck extends StatefulWidget {
+  HouseLevelCheck({this.uid});
+
+  final String uid;
+
   @override
-  _LevelCheckState createState() => _LevelCheckState();
+  _HouseLevelCheckState createState() => _HouseLevelCheckState();
 }
 
-class _LevelCheckState extends State<LevelCheck> {
+class _HouseLevelCheckState extends State<HouseLevelCheck> {
   BuildContext _context;
   bool _novice = false;
   bool _intermediate = false;
@@ -63,7 +67,7 @@ class _LevelCheckState extends State<LevelCheck> {
                             0, height * 0.025, 0, width * 0.12),
                         height: height * 0.3,
                         child: Text(
-                          'OPIc 주제 별 문장 학습을 \n진행하기 전에 원하는 \n난이도를 선택해 주세요. \n\n선택하신 난이도에 맞는 문장을 \n학습하실 수 있답니다^^',
+                          'OPIc 주제 별 문장 학습을 \n진행하기 전에 원하는 \n난이도를 선택해 주세요. \n\n선택하신 난이도에 맞는 문장을 \n학습하실 수 있습니다',
                           style: TextStyle(
                             fontSize: width * 0.05,
                             fontWeight: FontWeight.bold,
@@ -175,6 +179,7 @@ class _LevelCheckState extends State<LevelCheck> {
                               return Household_Novice(
                                 saveIndex: _index,
                                 sentencefullcount: _sentencefullcount,
+                                uid: widget.uid,
                               );
                             }));
                           } else if (_count == 1 && _intermediate == true) {
@@ -184,6 +189,7 @@ class _LevelCheckState extends State<LevelCheck> {
                               return Household_Intermediate(
                                 saveIndex: _index,
                                 sentencefullcount: _sentencefullcount,
+                                uid: widget.uid,
                               );
                             }));
                           } else if (_count == 1 && _advanced == true) {
@@ -193,6 +199,7 @@ class _LevelCheckState extends State<LevelCheck> {
                               return Household_Advanced(
                                 saveIndex: _index,
                                 sentencefullcount: _sentencefullcount,
+                                uid: widget.uid,
                               );
                             }));
                           } else {
@@ -217,7 +224,7 @@ class _LevelCheckState extends State<LevelCheck> {
     );
   }
 
-  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
+  // firestore에서 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
   void countHouseNovice() async {
     QuerySnapshot _myDoc =
         await Firestore.instance.collection('house_novice').getDocuments();
@@ -225,7 +232,7 @@ class _LevelCheckState extends State<LevelCheck> {
     _sentencefullcount = _myDocCount.length;
   }
 
-  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
+  // firestore에서 "집안일 거들기"에서 intermediate 레벨의 document들 갯수를 count하는 함수.
   void countHouseIM() async {
     QuerySnapshot _myDoc = await Firestore.instance
         .collection('house_intermediate')
@@ -234,7 +241,7 @@ class _LevelCheckState extends State<LevelCheck> {
     _sentencefullcount = _myDocCount.length;
   }
 
-  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
+  // firestore에서 "집안일 거들기"에서 advanced 레벨의 document들 갯수를 count하는 함수.
   void countHouseAL() async {
     QuerySnapshot _myDoc =
         await Firestore.instance.collection('house_advanced').getDocuments();
@@ -245,7 +252,7 @@ class _LevelCheckState extends State<LevelCheck> {
   // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
   void getHouseNoviceIndexData() async {
     await Firestore.instance
-        .collection('save_house_novice_index')
+        .collection(widget.uid + '_save_house_novice_index')
         .document('index')
         .get()
         .then((idx) {
@@ -257,7 +264,7 @@ class _LevelCheckState extends State<LevelCheck> {
   // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
   void getHouseIMIndexData() async {
     await Firestore.instance
-        .collection('save_house_intermediate_index')
+        .collection(widget.uid + '_save_house_intermediate_index')
         .document('index')
         .get()
         .then((idx) {
@@ -269,7 +276,7 @@ class _LevelCheckState extends State<LevelCheck> {
   // firestore에서 최근에 봤던 영어 문장의 index가 저장된 데이터를 읽어옴.
   void getHouseALIndexData() async {
     await Firestore.instance
-        .collection('save_house_al_index')
+        .collection(widget.uid + '_save_house_al_index')
         .document('index')
         .get()
         .then((idx) {

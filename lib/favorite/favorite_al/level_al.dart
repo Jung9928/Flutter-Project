@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class LevelAl extends StatefulWidget {
-  LevelAl({Key key, this.favoriteFullCount}) : super(key: key);
+  LevelAl({Key key, this.favoriteFullCount, this.uid}) : super(key: key);
 
   int favoriteFullCount; // 즐겨찾기에 저장된 영어문장 총 개수
+  String uid;
+
   @override
   _LevelAlState createState() => _LevelAlState();
 }
@@ -13,6 +15,7 @@ class _LevelAlState extends State<LevelAl> {
   BuildContext _context;
   int indexOfFavoriteNovice =
       0; // 현재 firestore에 저장된 favorite_novice 컬렉션의 데이터 index
+  String docID;
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +24,14 @@ class _LevelAlState extends State<LevelAl> {
     double height = screenSize.height;
     _context = context;
 
+    print(widget.uid);
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.red[200],
           title: Text(
-            'AL 수준의 즐겨찾기 문장',
+            'NL~NH 수준의 즐겨찾기 문장',
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
         ),
@@ -36,7 +41,7 @@ class _LevelAlState extends State<LevelAl> {
             Center(
               child: StreamBuilder<QuerySnapshot>(
                 stream: Firestore.instance
-                    .collection("favorite_novice")
+                    .collection(widget.uid + "_favorite_advanced")
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -57,8 +62,8 @@ class _LevelAlState extends State<LevelAl> {
                             border: Border.all(color: Colors.red[200]),
                             color: Colors.red[200],
                           ),
-                          width: (screenSize.width) * 0.85,
-                          height: height * 0.6,
+                          width: width * 0.85,
+                          height: height * 0.7,
                           child: Column(
                             children: [
                               Padding(
@@ -101,7 +106,7 @@ class _LevelAlState extends State<LevelAl> {
                                   children: <Widget>[
                                     Container(
                                       padding: EdgeInsets.fromLTRB(
-                                          0, width * 0.048, 0, width * 0.18),
+                                          0, height * 0.028, 0, width * 0.18),
                                       child: Text(
                                         snapshot
                                             .data
@@ -178,30 +183,36 @@ class _LevelAlState extends State<LevelAl> {
                                       ),
                                     ),
 //                                    ButtonTheme(
-//                                      minWidth: width * 0.2,
-//                                      height: height * 0.05,
-//                                      shape: RoundedRectangleBorder(
-//                                        borderRadius: BorderRadius.circular(10),
-//                                      ),
-//                                      child: RaisedButton(
-//                                        onPressed: () {
+////                                      minWidth: width * 0.2,
+////                                      height: height * 0.05,
+////                                      shape: RoundedRectangleBorder(
+////                                        borderRadius: BorderRadius.circular(10),
+////                                      ),
+////                                      child: RaisedButton(
+////                                        onPressed: () {
 ////                                          showAlertDeleteFavoriteDialog(
-////                                              Firestore.instance
-////                                                  .collection(
-////                                                  'favorite_novice')
-////                                                  .document()
-////                                                  .get()
+////                                              snapshot
+////                                                  .data
+////                                                  .documents[
+////                                                      indexOfFavoriteNovice]
+////                                                      ['text']
+////                                                  .toString(),
+////                                              snapshot
+////                                                  .data
+////                                                  .documents[
+////                                                      indexOfFavoriteNovice]
+////                                                      ['translation']
 ////                                                  .toString());
-//                                        },
-//                                        child: Text(
-//                                          '즐겨찾기 삭제',
-//                                          style: TextStyle(
-//                                              fontWeight: FontWeight.bold),
-//                                        ),
-//                                        color: Colors.white,
-//                                        textColor: Colors.black,
-//                                      ),
-//                                    ),
+////                                        },
+////                                        child: Text(
+////                                          '즐겨찾기 삭제',
+////                                          style: TextStyle(
+////                                              fontWeight: FontWeight.bold),
+////                                        ),
+////                                        color: Colors.white,
+////                                        textColor: Colors.black,
+////                                      ),
+////                                    ),
                                     ButtonTheme(
                                       minWidth: width * 0.2,
                                       height: height * 0.05,
@@ -246,21 +257,29 @@ class _LevelAlState extends State<LevelAl> {
     );
   }
 
-  // 즐겨찾기 삭제.
-  void deleteFavorite(text, translation) {
-    Firestore.instance
-        .collection('favorite_novice')
-        .document(getDocumentID(text, translation))
-        .delete();
-  }
+//  // 즐겨찾기 삭제.
+//  void deleteFavorite(text, translation) {
+//    Firestore.instance
+//        .collection('favorite_novice')
+//        .document(getDocumentID(text, translation))
+//        .delete();
+//  }
 
-  getDocumentID(String text, String translation) {
-    return Firestore.instance
-        .collection('favorite_novice')
-        .where('text', isEqualTo: text)
-        .where('translation', isEqualTo: translation)
-        .getDocuments();
-  }
+//  void getDocumentID(String text, String translation) async {
+//    docID = (await Firestore.instance
+//        .collection(widget.uid + '_favorite_novice')
+//        .where('text', isEqualTo: text)
+//        .where('translation', isEqualTo: translation)
+//        .getDocuments()) as String;
+//    print(docID);
+//  }
+//
+//  void deleteFavorite(String docID) async {
+//    await Firestore.instance
+//        .collection(widget.uid + '_favorite_novice')
+//        .document()
+//        .delete();
+//  }
 
   // 첫 문장 또는 마지막 문장에서 이전 or 다음 버튼을 눌렀을 시, 호출되는 함수.
   void showAlertDialog(int count) async {
@@ -301,33 +320,35 @@ class _LevelAlState extends State<LevelAl> {
     );
   }
 
-  Future<void> showAlertDeleteFavoriteDialog(text, translation) async {
-    await showDialog(
-      context: _context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('즐겨찾기 삭제 경고'),
-          content: Text("정말 삭제하시겠습니까?\n삭제된 즐겨찾기는 복구되지 않습니다."),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('삭제'),
-              onPressed: () {
-                deleteFavorite(text, translation);
-                Navigator.pop(context, "삭제");
-              },
-            ),
-            FlatButton(
-              child: Text('취소'),
-              onPressed: () {
-                Navigator.pop(context, "취소");
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+//  Future<void> showAlertDeleteFavoriteDialog(
+//      currentText, currentTranslation) async {
+//    await showDialog(
+//      context: _context,
+//      barrierDismissible: false, // user must tap button!
+//      builder: (BuildContext context) {
+//        return AlertDialog(
+//          title: Text('즐겨찾기 삭제 경고'),
+//          content: Text("정말 삭제하시겠습니까?\n삭제된 즐겨찾기는 복구되지 않습니다."),
+//          actions: <Widget>[
+//            FlatButton(
+//              child: Text('삭제'),
+//              onPressed: () {
+//                getDocumentID(currentText, currentTranslation);
+//                deleteFavorite(docID);
+//                Navigator.pop(context, "삭제");
+//              },
+//            ),
+//            FlatButton(
+//              child: Text('취소'),
+//              onPressed: () {
+//                Navigator.pop(context, "취소");
+//              },
+//            ),
+//          ],
+//        );
+//      },
+//    );
+//  }
 }
 
 // 배경 이미지를 희미하게 삽입.

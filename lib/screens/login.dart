@@ -102,6 +102,7 @@ class AuthPage extends StatelessWidget {
         .createUserWithEmailAndPassword(
             email: _emailController.text, password: _passwordController.text);
     final FirebaseUser user = result.user;
+    final FirebaseUser uid = await FirebaseAuth.instance.currentUser();
 
     if (user == null) {
       final snacBar = SnackBar(
@@ -109,9 +110,6 @@ class AuthPage extends StatelessWidget {
       );
       Scaffold.of(context).showSnackBar(snacBar);
     }
-
-    //Navigator.push(context,
-    //    MaterialPageRoute(builder: (context) => MainPage(email: user.email)));
   }
 
   // Login 버튼 누를 시,
@@ -158,7 +156,7 @@ class AuthPage extends StatelessWidget {
               child: Text(
                 jointOrLogin.isJoin ? "계정생성" : "로그인",
               ),
-              color: jointOrLogin.isJoin ? Colors.red : Colors.blueAccent,
+              color: jointOrLogin.isJoin ? Colors.red[200] : Colors.blueAccent,
               // Login 버튼 모양 설정
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),

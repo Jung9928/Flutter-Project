@@ -11,6 +11,8 @@ class Management extends StatefulWidget {
     this.houseNoviceFullCount,
     this.houseImFullCount,
     this.houseAlFullCount,
+    this.uid,
+    this.email,
   }) : super(key: key);
 
   int saveHouseNoviceCount;
@@ -19,6 +21,8 @@ class Management extends StatefulWidget {
   int houseNoviceFullCount;
   int houseImFullCount;
   int houseAlFullCount;
+  String uid;
+  String email;
 
   @override
   _ManagementState createState() => _ManagementState();
@@ -67,9 +71,7 @@ class _ManagementState extends State<Management> {
         ),
         body: Center(
           child: StreamBuilder<QuerySnapshot>(
-              stream: Firestore.instance
-                  .collection("save_house_novice_index")
-                  .snapshots(),
+              stream: Firestore.instance.collection("house_novice").snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (snapshot.hasError) return Text("Error: ${snapshot.error}");
@@ -106,7 +108,7 @@ class _ManagementState extends State<Management> {
                         radius: height * 0.14,
                         lineWidth: height * 0.015,
                         animation: true,
-                        percent: 0.7,
+                        percent: percentIm,
                         center: new Text(
                           (percentIm * 100).toString() + '%',
                           style: new TextStyle(
@@ -125,7 +127,7 @@ class _ManagementState extends State<Management> {
                         radius: height * 0.14,
                         lineWidth: height * 0.015,
                         animation: true,
-                        percent: 0.7,
+                        percent: percentAl,
                         center: new Text(
                           (percentAl * 100).toString() + '%',
                           style: new TextStyle(

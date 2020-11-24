@@ -11,7 +11,7 @@ class LoginBackground extends CustomPainter {
     // Paint 객체의 color 값을 blueAccent로 설정한 후, 변수 paint에 저장.
     // a = b = c; 와 같은 개념인데 아래의 경우는 Paint().. << 이 .(점)이 2개인게 핵심.
     // .을 포인터라 생각하면 됨.
-    Paint paint = Paint()..color = isJoin ? Colors.red : Colors.blueAccent;
+    Paint paint = Paint()..color = isJoin ? Colors.red[200] : Colors.blueAccent;
     // 첫 번째 인자 값 : 크기, 2번째 인자 값 : 반지름 , 3번째 인자 값 : 적용할 변수.
     canvas.drawCircle(
         Offset(size.width * 0.5, size.height * 0.2), size.height * 0.5, paint);

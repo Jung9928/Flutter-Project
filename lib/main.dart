@@ -41,7 +41,9 @@ class Splash extends StatelessWidget {
                 child: AuthPage());
           } else {
             return MainPage(
-                email: snapshot.data.email); // login이 되었을 경우, MainPage로 감.
+              email: snapshot.data.email,
+              uid: snapshot.data.uid, // 사용자의 firebase uid 값
+            ); // login이 되었을 경우, MainPage로 감.
           }
         });
   }

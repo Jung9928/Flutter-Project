@@ -5,31 +5,35 @@ import 'package:flutter_firebase_login/favorite/favorite_al/level_al.dart';
 import 'package:flutter_firebase_login/favorite/favorite_im/level_im.dart';
 import 'package:flutter_firebase_login/favorite/favorite_novice/level_novice.dart';
 
-class favoriteNovice extends StatefulWidget {
-  favoriteNovice(
+class FavoriteNoviceList extends StatefulWidget {
+  FavoriteNoviceList(
       {Key key,
       this.favoriteHouseNoviceCount,
       this.favoriteHouseIMCount,
-      this.favoriteHouseALCount})
+      this.favoriteHouseALCount,
+      this.uid})
       : super(key: key);
   int favoriteHouseNoviceCount;
   int favoriteHouseIMCount;
   int favoriteHouseALCount;
+  String uid;
 
   @override
-  _favoriteNoviceState createState() => _favoriteNoviceState();
+  _FavoriteNoviceListState createState() => _FavoriteNoviceListState();
 }
 
-class _favoriteNoviceState extends State<favoriteNovice> {
+class _FavoriteNoviceListState extends State<FavoriteNoviceList> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     double width = screenSize.width;
     double height = screenSize.height;
 
-    countFavoriteNovice('favorite_novice');
-    countFavoriteIM('favorite_intermediate');
-    countFavoriteAL('favorite_al');
+//    countFavoriteNovice(widget.uid + '_favorite_novice');
+//    countFavoriteIM(widget.uid + '_favorite_intermediate');
+//    countFavoriteAL(widget.uid + '_favorite_al');
+
+    print(widget.uid);
 
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +48,7 @@ class _favoriteNoviceState extends State<favoriteNovice> {
           BackgroundImage(context), // 배경 이미지를 희미하게 삽입.
           StreamBuilder<QuerySnapshot>(
             stream: Firestore.instance
-                .collection("house_novice")
+                .collection(widget.uid + "_favorite_novice")
                 .orderBy('timestamp', descending: true)
                 .snapshots(),
             builder:
@@ -122,6 +126,7 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                                 return LevelNovice(
                                   favoriteFullCount:
                                       widget.favoriteHouseNoviceCount,
+                                  uid: widget.uid,
                                 );
                               }));
                             },
@@ -192,7 +197,8 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                                   builder: (BuildContext context) {
                                 return LevelIm(
                                     favoriteFullCount:
-                                        widget.favoriteHouseIMCount);
+                                        widget.favoriteHouseIMCount,
+                                    uid: widget.uid);
                               }));
                             },
                           ),
@@ -262,7 +268,8 @@ class _favoriteNoviceState extends State<favoriteNovice> {
                                   builder: (BuildContext context) {
                                 return LevelAl(
                                     favoriteFullCount:
-                                        widget.favoriteHouseALCount);
+                                        widget.favoriteHouseALCount,
+                                    uid: widget.uid);
                               }));
                             },
                           ),
@@ -278,29 +285,29 @@ class _favoriteNoviceState extends State<favoriteNovice> {
     );
   }
 
-  // firestore에서 즐겨찾기에 저장된 novice 레벨의 document들 갯수를 count하는 함수.
-  void countFavoriteNovice(docID) async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection(docID).getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    widget.favoriteHouseNoviceCount = _myDocCount.length;
-  }
-
-  // firestore에서 즐겨찾기에 저장된 Intermediate 레벨의 document들 갯수를 count하는 함수.
-  void countFavoriteIM(docID) async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection(docID).getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    widget.favoriteHouseIMCount = _myDocCount.length;
-  }
-
-  // firestore에서 즐겨찾기에 저장된 AL 레벨의 document들 갯수를 count하는 함수.
-  void countFavoriteAL(docID) async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection(docID).getDocuments();
-    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
-    widget.favoriteHouseALCount = _myDocCount.length;
-  }
+//  // firestore에서 즐겨찾기에 저장된 novice 레벨의 document들 갯수를 count하는 함수.
+//  void countFavoriteNovice(colID) async {
+//    QuerySnapshot _myDoc =
+//        await Firestore.instance.collection(colID).getDocuments();
+//    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+//    widget.favoriteHouseNoviceCount = _myDocCount.length;
+//  }
+//
+//  // firestore에서 즐겨찾기에 저장된 Intermediate 레벨의 document들 갯수를 count하는 함수.
+//  void countFavoriteIM(colID) async {
+//    QuerySnapshot _myDoc =
+//        await Firestore.instance.collection(colID).getDocuments();
+//    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+//    widget.favoriteHouseIMCount = _myDocCount.length;
+//  }
+//
+//  // firestore에서 즐겨찾기에 저장된 AL 레벨의 document들 갯수를 count하는 함수.
+//  void countFavoriteAL(colID) async {
+//    QuerySnapshot _myDoc =
+//        await Firestore.instance.collection(colID).getDocuments();
+//    List<DocumentSnapshot> _myDocCount = _myDoc.documents;
+//    widget.favoriteHouseALCount = _myDocCount.length;
+//  }
 }
 
 // 배경 이미지를 희미하게 삽입.

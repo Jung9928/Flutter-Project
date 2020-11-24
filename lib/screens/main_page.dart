@@ -11,9 +11,10 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 
 class MainPage extends StatefulWidget {
   // MainPage 위젯 생성 시, 생성자로 email 값을 가져옴.
-  MainPage({this.email});
+  MainPage({this.email, this.uid});
 
   final String email;
+  final String uid;
 
   @override
   _MainPageState createState() => _MainPageState();
@@ -43,16 +44,21 @@ class _MainPageState extends State<MainPage> {
       _selectedIndex = index;
       return FirebaseAuth.instance.signOut();
     } else if (index == 1) {
+//      await createSaveHouseALIndex();
+//      await createSaveHouseIntermediateIndex();
+//      await createSaveHouseALIndex();
       await countFavoriteHouseNovice();
       await countFavoriteImNovice();
       await countFavoriteAlNovice();
       _selectedIndex = index;
       Navigator.push(context,
           MaterialPageRoute<void>(builder: (BuildContext context) {
-        return favoriteNovice(
-            favoriteHouseNoviceCount: _favoriteHouseNoviceFullCount,
-            favoriteHouseIMCount: _favoriteHouseImFullCount,
-            favoriteHouseALCount: _favoriteHouseAlFullCount);
+        return FavoriteNoviceList(
+          favoriteHouseNoviceCount: _favoriteHouseNoviceFullCount,
+          favoriteHouseIMCount: _favoriteHouseImFullCount,
+          favoriteHouseALCount: _favoriteHouseAlFullCount,
+          uid: widget.uid,
+        );
       }));
     } else {
       await getSaveHouseNoviceData();
@@ -62,12 +68,15 @@ class _MainPageState extends State<MainPage> {
       Navigator.push(context,
           MaterialPageRoute<void>(builder: (BuildContext context) {
         return Management(
-            houseNoviceFullCount: houseNoviceFullCount,
-            houseImFullCount: houseImFullCount,
-            houseAlFullCount: houseAlFullCount,
-            saveHouseNoviceCount: saveHouseNoviceCount,
-            saveHouseImCount: saveHouseImCount,
-            saveHouseAlCount: saveHouseAlCount);
+          houseNoviceFullCount: houseNoviceFullCount,
+          houseImFullCount: houseImFullCount,
+          houseAlFullCount: houseAlFullCount,
+          saveHouseNoviceCount: saveHouseNoviceCount,
+          saveHouseImCount: saveHouseImCount,
+          saveHouseAlCount: saveHouseAlCount,
+          uid: widget.uid,
+          email: widget.email,
+        );
       }));
     }
   }
@@ -180,7 +189,7 @@ class _MainPageState extends State<MainPage> {
                                   Navigator.push(context,
                                       CupertinoPageRoute<void>(
                                           builder: (BuildContext context) {
-                                    return Make_Script();
+                                    return Make_Script(uid: widget.uid);
                                   }));
                                 },
                               ),
@@ -268,7 +277,9 @@ class _MainPageState extends State<MainPage> {
                                   Navigator.push(context,
                                       MaterialPageRoute<void>(
                                           builder: (BuildContext context) {
-                                    return StudyPage();
+                                    return StudyPage(
+                                      uid: widget.uid,
+                                    );
                                   }));
                                 },
                               ),
@@ -309,24 +320,27 @@ class _MainPageState extends State<MainPage> {
 
   // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
   Future<void> countFavoriteHouseNovice() async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection('favorite_novice').getDocuments();
+    QuerySnapshot _myDoc = await Firestore.instance
+        .collection(widget.uid + '_favorite_novice')
+        .getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
     _favoriteHouseNoviceFullCount = _myDocCount.length;
   }
 
-  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
+  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 IL~IM 레벨의 document들 갯수를 count하는 함수.
   Future<void> countFavoriteImNovice() async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection('favorite_novice').getDocuments();
+    QuerySnapshot _myDoc = await Firestore.instance
+        .collection(widget.uid + '_favorite_intermediate')
+        .getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
     _favoriteHouseImFullCount = _myDocCount.length;
   }
 
-  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 novice 레벨의 document들 갯수를 count하는 함수.
+  // firestore에서 즐겨찾기에 저장된 "집안일 거들기"에서 AL 레벨의 document들 갯수를 count하는 함수.
   Future<void> countFavoriteAlNovice() async {
-    QuerySnapshot _myDoc =
-        await Firestore.instance.collection('favorite_novice').getDocuments();
+    QuerySnapshot _myDoc = await Firestore.instance
+        .collection(widget.uid + '_favorite_AL')
+        .getDocuments();
     List<DocumentSnapshot> _myDocCount = _myDoc.documents;
     _favoriteHouseAlFullCount = _myDocCount.length;
   }
@@ -358,7 +372,7 @@ class _MainPageState extends State<MainPage> {
   Future<void> getSaveHouseNoviceData() async {
     countNovice();
     await Firestore.instance
-        .collection('save_house_novice_index')
+        .collection(widget.uid + '_save_house_novice_index')
         .document('index')
         .get()
         .then((idx) {
@@ -370,7 +384,7 @@ class _MainPageState extends State<MainPage> {
   Future<void> getSaveHouseImData() async {
     countIM();
     await Firestore.instance
-        .collection('save_house_intermediate_index')
+        .collection(widget.uid + '_save_house_intermediate_index')
         .document('index')
         .get()
         .then((idx) {
@@ -382,13 +396,34 @@ class _MainPageState extends State<MainPage> {
   Future<void> getSaveHouseAlData() async {
     countAL();
     await Firestore.instance
-        .collection('save_house_al_index')
+        .collection(widget.uid + '_save_house_al_index')
         .document('index')
         .get()
         .then((idx) {
       saveHouseAlCount = idx.data['textIndex'];
     });
   }
+
+//  Future<void> createSaveHouseNoviceIndex() async {
+//    await Firestore.instance
+//        .collection(widget.uid + 'save_house_novice_index')
+//        .document('index')
+//        .setData({'textIndex': 0});
+//  }
+//
+//  Future<void> createSaveHouseIntermediateIndex() async {
+//    await Firestore.instance
+//        .collection(widget.uid + 'save_house_intermediate_index')
+//        .document('index')
+//        .setData({'textIndex': 0});
+//  }
+//
+//  Future<void> createSaveHouseALIndex() async {
+//    await Firestore.instance
+//        .collection(widget.uid + 'save_house_al_index')
+//        .document('index')
+//        .setData({'textIndex': 0});
+//  }
 }
 
 // 배경 이미지를 희미하게 삽입.

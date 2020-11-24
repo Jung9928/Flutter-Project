@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class BankIntermediate extends StatefulWidget {
-  BankIntermediate({Key key, this.saveIndex, this.sentencefullcount})
+  BankIntermediate({Key key, this.saveIndex, this.sentencefullcount, this.uid})
       : super(key: key);
 
   int saveIndex; // firestore에 저장된 가장 최근에 본 영어 문장 인덱스를 저장할 변수.
   int sentencefullcount; // novice 레벨의 영어문장 총 갯수
+  String uid;
 
   @override
   _BankIntermediateState createState() => _BankIntermediateState();
@@ -24,6 +25,7 @@ class _BankIntermediateState extends State<BankIntermediate> {
     _context = context;
 
     print(widget.saveIndex + 1);
+    print(widget.uid);
 
     return SafeArea(
       child: Scaffold(
@@ -187,6 +189,7 @@ class _BankIntermediateState extends State<BankIntermediate> {
                                       // 즐겨찾기 버튼 클릭 시, 현재 보고있는 level의 영어문장을 firestore의 즐겨찾기 컬렉션에 저장.
                                       onPressed: () {
                                         setState(() {
+                                          print(widget.uid);
                                           Add_Favorite(
                                               snapshot
                                                   .data
@@ -296,7 +299,7 @@ class _BankIntermediateState extends State<BankIntermediate> {
     Fluttertoast.showToast(
       msg: '즐겨찾기 추가 완료',
       gravity: ToastGravity.BOTTOM,
-      backgroundColor: Colors.red[200],
+      backgroundColor: Colors.deepPurple,
       fontSize: 20.0,
       textColor: Colors.white,
       toastLength: Toast.LENGTH_SHORT,
@@ -304,19 +307,21 @@ class _BankIntermediateState extends State<BankIntermediate> {
   }
 
   // 가장 최근에 본 문장의 index를 firestore에 저장.
-  void updateIndex(int index) {
-    Firestore.instance
-        .collection("save_bank_intermediate_index")
+  void updateIndex(int index) async {
+    await Firestore.instance
+        .collection(widget.uid + "_save_bank_intermediate_index")
         .document("index")
-        .updateData({
+        .setData({
       'textIndex': index,
     });
   }
 
   // firestore의 favorite_novice에 데이터 추가. (즐겨찾기 클릭 시,)
-  void Add_Favorite(String name, String description) {
+  void Add_Favorite(String name, String description) async {
     flutterToast();
-    Firestore.instance.collection('favorite_intermediate').add({
+    await Firestore.instance
+        .collection(widget.uid + '_favorite_intermediate')
+        .add({
       'text': name,
       'translation': description,
     });

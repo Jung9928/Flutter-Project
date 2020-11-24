@@ -5,6 +5,10 @@ import 'package:flutter_firebase_login/script/view_script.dart';
 import 'package:flutter_firebase_login/script/write_script.dart';
 
 class Make_Script extends StatefulWidget {
+  Make_Script({this.uid});
+
+  final String uid; // 로그인한 사용자의 firebase uid 값.
+
   @override
   _Make_ScriptState createState() => _Make_ScriptState();
 }
@@ -30,7 +34,7 @@ class _Make_ScriptState extends State<Make_Script> {
             height: MediaQuery.of(context).size.height,
             child: StreamBuilder<QuerySnapshot>(
               stream: Firestore.instance
-                  .collection("test")
+                  .collection(widget.uid + "_script")
                   .orderBy('scriptDate',
                       descending:
                           true) // 가장 최근에 저장한 내용을 최상단에 노출할 수 있게 정렬하여 데이터를 가져옴.
@@ -78,6 +82,7 @@ class _Make_ScriptState extends State<Make_Script> {
                                             text: document["scriptText"],
                                             date: dt.toString(),
                                             docID: document.documentID,
+                                            uid: widget.uid,
                                           )));
                             },
                             onLongPress: () {
@@ -153,7 +158,7 @@ class _Make_ScriptState extends State<Make_Script> {
         onPressed: () {
           Navigator.push(context,
               MaterialPageRoute<void>(builder: (BuildContext context) {
-            return WriteScript();
+            return WriteScript(uid: widget.uid);
           }));
         },
         tooltip: '스크립트를 추가하려면 클릭하세요',
@@ -164,12 +169,15 @@ class _Make_ScriptState extends State<Make_Script> {
     );
   }
 
-  void showDocument(String documentID) {
-    Firestore.instance.collection(colName).document(documentID).get();
-  }
+//  void showDocument(String documentID) {
+//    Firestore.instance.collection(widget.uid).document(documentID).get();
+//  }
 
   void deleteScript(String docID) {
-    Firestore.instance.collection(colName).document(docID).delete();
+    Firestore.instance
+        .collection(widget.uid + '_script')
+        .document(docID)
+        .delete();
   }
 
   void showAlertDialog(docID) async {
