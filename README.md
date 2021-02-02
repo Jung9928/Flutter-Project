@@ -1,6 +1,6 @@
-#### 플러터 개인 프로젝트 (Firestore & Firebase) ####
+#### 플러터 개인 프로젝트 ####
 
-# OPIc Study Application #
+# OPIc Study Application (Firestore & Firebase) #
 
 1) 로그인 & 로그아웃 구현
 2) 메모 생성/삭제/수정/저장 구현
