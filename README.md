@@ -7,6 +7,13 @@
 3) Youtube API를 사용한 Youtube 영상 ListView
 4) Firestore에서 영어 문장 Data retrieved &  UI 렌더링
 
+
+#### Dev Tool ####
+1. Flutter Framework 1.22.2 version
+2. Dart 2.10.2 version
+3. Android Studio 3.5 verion
+4. Firebase & Firestore
+
 A new Flutter application.
 
 #### Screenshot ####
